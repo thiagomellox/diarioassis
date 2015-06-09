@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"> 
+    
+     
+
+<h:body>
+	
+	<ui:composition template="/layout.xhtml">
+ 		<ui:define name="content"> 
+ 			<h:form>
+ 				
+		        <fieldset style="padding: 5px; border: 0px;">
+			        <h:panelGrid columns="3" cellpadding="5">
+			            <h:outputLabel for="nome" value="Nome:" />
+			            <p:inputText id="username" value="#{assinanteBBean.nome}" required="true" label="nome" />
+			            
+				        <p:commandButton value="Pesquisar" id="pesquisar"
+				        actionListener="#{assinanteBBean.pesquisar}" styleClass="ui-priority-primary" />
+			        </h:panelGrid>
+			        <h:panelGrid columns="2" cellpadding="5">
+				        <p:outputLabel for="entregador" value="Entregador:" />
+				        <p:selectOneMenu id="entregador" value="#{assinanteBBean.codEntregador}">
+				            <f:selectItems value="#{assinanteBBean.entregadorSelectItem}" />
+				        </p:selectOneMenu>
+			        </h:panelGrid>
+			        
+			        <p:commandButton value="Incluir Novo" id="incluir" style="float: right;"
+				        actionListener="#{assinanteBBean.pesquisar}" styleClass="ui-priority-primary" />
+		        </fieldset>
+		        
+		        <fieldset style="padding: 5px; border: 0px;">
+			        <p:dataTable var="item" 
+			        value="#{assinanteBBean.listaGrid}"
+			        >
+					    <p:column headerText="Nome">
+					        <h:outputText value="#{item.nome}" />
+					    </p:column>
+					 
+					    <p:column headerText="Endereço">
+					        <h:outputText value="#{item.endereco}" />
+					    </p:column>
+					 
+					    <p:column headerText="Bairro">
+					        <h:outputText value="#{item.bairro}" />
+					    </p:column>
+					 
+					    <p:column headerText="Cidade">
+					        <h:outputText value="#{item.cidade}" />
+					    </p:column>
+					</p:dataTable>
+				</fieldset>
+			</h:form>
+		</ui:define>
+   	</ui:composition>
+ 
+</h:body>
+
+</html>

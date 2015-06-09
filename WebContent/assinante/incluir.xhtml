@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"> 
+    
+     
+
+<h:body>
+	
+	<ui:composition template="/layout.xhtml">
+ 		<ui:define name="content"> 
+ 			<h:form>
+				<h:panelGrid columns="2" cellpadding="5">
+		            <h:outputLabel for="nome" value="Nome:" />
+		            <p:inputText id="username" value="#{assinanteBBean.nome}" required="true" label="nome" />
+		 
+		            <h:outputLabel for="endereco" value="Endereço:" />
+		            <p:inputText id="endereco" value="#{assinanteBBean.endereco}"  label="endereco" />
+		            
+		            <h:outputLabel for="cidade" value="Cidade:" />
+		            <p:inputText id="cidade" value="#{assinanteBBean.cidade}"  label="cidade" />
+		            
+		            <h:outputLabel for="telefone" value="Telefone:" />
+		            <p:inputText id="telefone" value="#{assinanteBBean.telefone}"  label="telefone" />
+		            
+		            <h:outputLabel for="valorMensal" value="Valor Mensal:" />
+		            <p:inputText id="valorMensal" value="#{assinanteBBean.valorMensal}"  label="valorMensal" />
+		            	            
+		            <h:outputLabel for="valorAnual" value="Valor Anual:" />
+		            <p:inputText id="valorAnual" label="valorAnual">
+		            	<f:convertNumber pattern="#0.00"/>
+		            </p:inputText> 
+		            
+		            <p:outputLabel for="dataCadastro" value="Data Cadastro:" />
+			       <p:calendar id="dataCadastro" pattern="dd/MM/yyyy" />
+			       
+			       <p:outputLabel for="dataVencimento" value="Data Vencimento:" />
+			       <p:calendar id="dataVencimento" pattern="dd/MM/yyyy" />
+		            
+					
+		        </h:panelGrid>
+		        
+		        <p:commandButton value="Salvar" id="ajax"
+		        actionListener="#{assinanteBBean.salvar}" styleClass="ui-priority-primary" />
+			</h:form>
+		</ui:define>
+   	</ui:composition>
+ 
+</h:body>
+
+</html>
