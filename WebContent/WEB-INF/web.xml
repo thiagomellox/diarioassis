@@ -1,17 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
-  <display-name>diarioassis</display-name>
-  <servlet>
-    <servlet-name>Faces Servlet</servlet-name>
-    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Faces Servlet</servlet-name>
-    <url-pattern>*.xhtml</url-pattern>
-  </servlet-mapping>
-  <context-param>
-    <param-name>primefaces.THEME</param-name>
-    <param-value>start</param-value>
-</context-param>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+	<display-name>diarioassis</display-name>
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>start</param-value>
+	</context-param>
+
+	<context-param>
+		<description>
+            Context initialization parameter name for a comma delimited
+            list of context-relative resource paths (in addition to
+            /WEB-INF/faces-config.xml which is loaded automatically if
+            it exists) containing JavaServer Faces configuration
+            information.
+        </description>
+		<param-name>javax.faces.CONFIG_FILES</param-name>
+		<param-value>
+            /WEB-INF/faces-config.xml, /WEB-INF/faces-navigation.xml
+        </param-value>
+	</context-param>
+	
+	<!--
+         The welcome-file-list contains an ordered list of welcome
+         files elements.
+     -->
+    <welcome-file-list>
+        <welcome-file>index.xhtml</welcome-file>
+    </welcome-file-list>
+
 </web-app>

@@ -12,47 +12,49 @@
 	
 	<ui:composition template="/layout.xhtml">
  		<ui:define name="content"> 
- 			<h:form>
- 				
+ 			<h:form id="incluirassinante">
 		        <fieldset style="padding: 5px; border: 0px;">
-			        <h:panelGrid columns="3" cellpadding="5">
-			            <h:outputLabel for="nome" value="Nome:" />
-			            <p:inputText id="username" value="#{assinanteBBean.nome}" required="true" label="nome" />
-			            
-				        <p:commandButton value="Pesquisar" id="pesquisar"
-				        actionListener="#{assinanteBBean.pesquisar}" styleClass="ui-priority-primary" />
-			        </h:panelGrid>
-			        <h:panelGrid columns="2" cellpadding="5">
-				        <p:outputLabel for="entregador" value="Entregador:" />
-				        <p:selectOneMenu id="entregador" value="#{assinanteBBean.codEntregador}">
-				            <f:selectItems value="#{assinanteBBean.entregadorSelectItem}" />
-				        </p:selectOneMenu>
-			        </h:panelGrid>
-			        
-			        <p:commandButton value="Incluir Novo" id="incluir" style="float: right;"
-				        actionListener="#{assinanteBBean.pesquisar}" styleClass="ui-priority-primary" />
+		        	<h:panelGroup >
+				        <h:panelGrid columns="3" cellpadding="5">
+				            <h:outputLabel for="nome" value="Nome:" />
+				            <p:inputText id="username" value="#{assinanteBBean.nome}"  label="nome" />
+				            
+					        <p:commandButton value="Pesquisar" id="pesquisar"
+					        actionListener="#{assinanteBBean.pesquisar}" styleClass="ui-priority-primary" 
+					        update=":incluirassinante" />
+					        
+					        <p:outputLabel for="entregador" value="Entregador:" />
+					        <p:selectOneMenu id="entregador" value="#{assinanteBBean.codEntregador}">
+					            <f:selectItems value="#{assinanteBBean.entregadorSelectItem}" />
+					        </p:selectOneMenu>
+				        </h:panelGrid>
+
+						<p:commandButton value="Incluir Novo" id="incluirBnt"
+							style="float: right;" action="#{assinanteBBean.abrirIncluir}"
+							styleClass="ui-priority-primary" />
+					</h:panelGroup>
 		        </fieldset>
 		        
 		        <fieldset style="padding: 5px; border: 0px;">
-			        <p:dataTable var="item" 
-			        value="#{assinanteBBean.listaGrid}"
-			        >
-					    <p:column headerText="Nome">
-					        <h:outputText value="#{item.nome}" />
-					    </p:column>
-					 
-					    <p:column headerText="Endereço">
-					        <h:outputText value="#{item.endereco}" />
-					    </p:column>
-					 
-					    <p:column headerText="Bairro">
-					        <h:outputText value="#{item.bairro}" />
-					    </p:column>
-					 
-					    <p:column headerText="Cidade">
-					        <h:outputText value="#{item.cidade}" />
-					    </p:column>
-					</p:dataTable>
+					<h:panelGroup >
+						<p:dataTable var="item" id="listaGrid" value="#{assinanteBBean.listaGrid}">
+							<p:column headerText="Nome">
+								<h:outputText value="#{item.nome}" />
+							</p:column>
+
+							<p:column headerText="Endereço">
+								<h:outputText value="#{item.endereco}" />
+							</p:column>
+
+							<p:column headerText="Bairro">
+								<h:outputText value="#{item.bairro}" />
+							</p:column>
+
+							<p:column headerText="Cidade">
+								<h:outputText value="#{item.cidade}" />
+							</p:column>
+						</p:dataTable>
+					</h:panelGroup>
 				</fieldset>
 			</h:form>
 		</ui:define>

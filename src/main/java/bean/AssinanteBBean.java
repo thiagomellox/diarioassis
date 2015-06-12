@@ -1,6 +1,7 @@
 package bean;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -16,6 +17,7 @@ public class AssinanteBBean {
 
 	private String nome;
 	private String endereco;
+	private String bairro;
 	private String cidade;
 	private String telefone;
 	private String valorMensal;
@@ -32,27 +34,59 @@ public class AssinanteBBean {
 	private EntregadorDAO entregadorDAO = new EntregadorDAO();
 	
 	public AssinanteBBean() {
-		entregadorSelectItem = new ArrayList<SelectItem>();
-		for(Entregador entregador : entregadorDAO.listAll()){
-			entregadorSelectItem.add(new SelectItem(entregador.getCodentregador(), entregador.getNome()));
+		if(entregadorSelectItem == null){
+			entregadorSelectItem = new ArrayList<SelectItem>();
+			for(Entregador entregador : entregadorDAO.listAll()){
+				entregadorSelectItem.add(new SelectItem(entregador.getCodentregador(), entregador.getNome()));
+			}
 		}
+		
 	}
 
 	public String salvar() {
+		try{
+			Assinante ass = new Assinante();
+			ass.setNome(nome);
+			ass.setCidade(cidade);
+			ass.setBairro(bairro);
+			ass.setEndereco(endereco);
+			ass.setTelefone(telefone);
+			ass.setDatacadastro(new Date());
+			ass.setDatavencimento(new Date());
+			Entregador e = new Entregador();
+			e.setCodentregador(5);
+			ass.setEntregador(e);
+	
+			dao.save(ass);
+		}catch(Exception e){
+			return"";
+		}
 
-		System.out.println(nome);
-
-		List<Assinante> asas = dao.listAll();
-
-		return "";
+		return "listarAssinante";
 	}
 	
-	public final String pesquisar() {
+	public String abrirIncluir() {
+		
+		nome = null;
+		endereco = null;
+		cidade = null;
+		telefone = null;
+		valorMensal = null;
+		valorAnual = null;
+		dataCadastro = null;
+		dataValidade = null;
+		
+		return "incluirAssinante";
+	}
+	
+	public final void pesquisar() {
 		System.out.println(nome);
+		listaGrid = new ArrayList<Assinante>();
 		
 		listaGrid = dao.findByName(nome,"");
 		
-		return "";
+		System.out.println(">>>>>>>>>>>>>>>>>> " + listaGrid.size());
+		
 	}
 
 	public String getNome() {
@@ -142,5 +176,14 @@ public class AssinanteBBean {
 	public void setCodEntregador(Integer codEntregador) {
 		this.codEntregador = codEntregador;
 	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+	
 
 }
