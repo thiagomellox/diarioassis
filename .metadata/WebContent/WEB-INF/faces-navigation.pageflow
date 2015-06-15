@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14333594161040" configfile="/diarioassis/WebContent/WEB-INF/faces-navigation.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" id="pf14341400370720" outlinks="pf14341400370731 pf14341400370732 pf14343871049160" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf14341400370720" outlinks="pf14341400370731 pf14343982600761 pf143439838789310 pf143439838789311 pf143439838789312" path="*"/>
   <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf14341400370733" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14341400370731" path="/index.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="assinante/incluir.xhtml" id="pf14341400370734" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14341400370732" path="/assinante/incluir.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="assinante/listar.xhtml" id="pf14343871049171" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf14343871049160" path="/assinante/listar.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/assinante/incluir.xhtml" id="pf14343982600763" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf14343982600761" path="/pages/assinante/incluir.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/assinante/listar.xhtml" id="pf143439838789413" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf143439838789310" path="/pages/assinante/listar.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/entregador/incluir.xhtml" id="pf143439838789414" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf143439838789311" path="/pages/entregador/incluir.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="pages/entregador/listar.xhtml" id="pf143439838789415" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf143439838789312" path="/pages/entregador/listar.xhtml"/>
   <links id="pf14341400370731" target="pf14341400370733" source="pf14341400370720" outcome="home" redirect="true"/>
-  <links id="pf14341400370732" target="pf14341400370734" source="pf14341400370720" outcome="incluirAssinante" redirect="true"/>
-  <links id="pf14343871049160" target="pf14343871049171" source="pf14341400370720" outcome="listarAssinante" redirect="true"/>
+  <links id="pf14343982600761" target="pf14343982600763" source="pf14341400370720" outcome="incluirAssinante" redirect="true"/>
+  <links id="pf143439838789310" target="pf143439838789413" source="pf14341400370720" outcome="listarAssinante" redirect="true"/>
+  <links id="pf143439838789311" target="pf143439838789414" source="pf14341400370720" outcome="incluirEntregador" redirect="true"/>
+  <links id="pf143439838789312" target="pf143439838789415" source="pf14341400370720" outcome="listarEntregador" redirect="true"/>
 </pageflow:Pageflow>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"> 
+    
+     
+
+<h:body>
+	
+	<ui:composition template="/layout.xhtml">
+ 		<ui:define name="content"> 
+ 			<h:form id="incluir">
+				<fieldset style="padding: 5px; border: 0px;">
+					<p:outputLabel value="-> Incluir/Alterar Entregador" />
+					<p:messages id="messages" autoUpdate="true" closable="true" />
+				</fieldset>
+				<h:panelGrid columns="3" cellpadding="5">
+		            <p:outputLabel  for="nome" value="Nome:" />
+		            <p:inputText id="nome" value="#{entregadorBBean.nome}" required="true" label="nome" />
+		            <p:message for="nome" />
+		 
+		            <p:outputLabel  for="endereco" value="Endereço:" />
+		            <p:inputText id="endereco" value="#{entregadorBBean.endereco}"  label="endereco" />
+		            <p:message for="endereco" />
+		 
+		            <p:outputLabel  for="bairro" value="Bairro:" />
+		            <p:inputText id="bairro" value="#{entregadorBBean.bairro}"  label="bairro" />
+		            <p:message for="bairro" />
+		            
+		            <p:outputLabel  for="cidade" value="Cidade:" />
+		            <p:inputText id="cidade" value="#{entregadorBBean.cidade}"  label="cidade" />
+		            <p:message for="cidade" />
+		            
+		            <p:outputLabel  for="telefone" value="Telefone:" />
+		            <p:inputText id="telefone" value="#{entregadorBBean.telefone}"  label="telefone" />
+		            <p:message for="telefone" />
+		            
+		            <p:outputLabel  for="cpf" value="Cpf:" />
+		            <p:inputText id="cpf" value="#{entregadorBBean.cpf}"  label="cpf" />
+		            <p:message for="cpf" />
+		            
+		        </h:panelGrid>
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:commandButton value="Salvar" id="salvarBtn" update="incluir"
+						actionListener="#{entregadorBBean.salvar}"
+						styleClass="ui-priority-primary" icon="ui-icon-circle-check" />
+
+					<p:commandButton value="Cancelar" id="cancelarBnt" ignoreAutoUpdate="true" immediate="true" 
+						style="float: right;" action="#{entregadorBBean.listar}"
+						styleClass="ui-priority-primary" icon="ui-icon-close" />
+				</h:panelGrid>
+			</h:form>
+		</ui:define>
+   	</ui:composition>
+ 
+</h:body>
+
+</html>

@@ -5,9 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-
 import javax.persistence.Query;
 
+import entity.Assinante;
 import entity.Entregador;
 
 public class EntregadorDAO  extends DAO{
@@ -24,17 +24,24 @@ public class EntregadorDAO  extends DAO{
 //		return emprestimoEncontrado;
 //	}
 
-	public Entregador save(Entregador emprestimo) {
+	public Entregador save(Entregador entregador) {
 		em.getTransaction().begin();
 		em.clear();
-		em.persist(emprestimo);
+		em.persist(entregador);
 		em.getTransaction().commit();
-		return emprestimo;
+		return entregador;
+	}
+	
+	public Entregador update(Entregador entregador) {
+		em.getTransaction().begin();
+		em.merge(entregador);
+		em.getTransaction().commit();
+		return entregador;
 	}
 
-	public void remove(Entregador emprestimo) {
+	public void remove(Entregador entregador) {
 		em.getTransaction().begin();
-		em.remove(emprestimo);
+		em.remove(entregador);
 		em.getTransaction().commit();
 	}
 
@@ -43,6 +50,26 @@ public class EntregadorDAO  extends DAO{
 			em.persist(emprestimo);
 		}
 		return hashSetEntregador;
+	}
+	
+	public Entregador findById(Integer codentregador) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(" SELECT p FROM Entregador p");
+		sb.append(" WHERE p.codentregador = :codentregador");
+
+		Query query = em.createQuery(sb.toString());
+		query.setParameter("codentregador", codentregador);
+		return (Entregador) query.getSingleResult();
+	}
+	
+	public List<Entregador>  findByNome(String nome) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(" SELECT p FROM Entregador p");
+		sb.append(" WHERE p.nome like :nome");
+		
+		Query query = em.createQuery(sb.toString());
+		query.setParameter("nome", "%" + nome + "%");
+		return query.getResultList();
 	}
 
 	public List<Entregador> listAll() {

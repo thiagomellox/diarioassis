@@ -1,5 +1,8 @@
 package dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import entity.Entregador;
 
 
@@ -105,5 +108,16 @@ public class EntregadorDTO {
 		entregador.setBairro(bairro);
 		entregador.setCidade(cidade);
 		return entregador;
+	}
+	
+	public static List<EntregadorDTO> entityToDtoList(List<Entregador> entregadores ){
+		List<EntregadorDTO>  resultado = new ArrayList<EntregadorDTO>();
+
+		for(Entregador entregador : entregadores){
+			resultado.add(new EntregadorDTO(entregador));
+		}
+		
+		return resultado;
+		
 	}
 }

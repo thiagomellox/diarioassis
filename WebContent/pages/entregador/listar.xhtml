@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"> 
+    
+     
+
+<h:body>
+	
+	<ui:composition template="/layout.xhtml">
+ 		<ui:define name="content"> 
+ 			<h:form id="incluirentregador">
+ 				<fieldset style="padding: 5px; border: 0px;">
+	 				<p:outputLabel  value="-> Pesquisar Entregador" styleClass="titulo"/>
+	 				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+ 				</fieldset>
+		        <fieldset style="padding: 5px; border: 0px;">
+		        	<h:panelGroup >
+				        <h:panelGrid columns="3" cellpadding="5">
+				            <p:outputLabel for="nome" value="Nome:" />
+				            <p:inputText id="nome" value="#{entregadorBBean.nomePesquisa}"  label="nome" />
+				            
+					        <p:commandButton value="Pesquisar" id="pesquisar" icon="ui-icon-circle-zoomout"
+					        actionListener="#{entregadorBBean.pesquisar}" styleClass="ui-priority-primary" 
+					        update=":incluirentregador" >
+					        </p:commandButton>
+
+				        </h:panelGrid>
+
+						<p:commandButton value="Incluir Novo" id="incluirBnt" icon="ui-icon-circle-plus"
+							style="float: right;" action="#{entregadorBBean.abrirIncluir}"
+							styleClass="ui-priority-primary" />
+					</h:panelGroup>
+		        </fieldset>
+		        
+		        <fieldset style="padding: 5px; border: 0px;">
+					<h:panelGroup >
+						<p:dataTable var="item" id="listaGrid" value="#{entregadorBBean.listaGrid}"
+						
+						rows="5"
+						paginatorPosition="bottom"  
+						paginator="true"
+                         paginatorTemplate="  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}">
+							<p:column headerText="Nome">
+								<h:outputText value="#{item.nome}" />
+							</p:column>
+
+							<p:column headerText="Endereço">
+								<h:outputText value="#{item.endereco}" />
+							</p:column>
+
+							<p:column headerText="Bairro">
+								<h:outputText value="#{item.bairro}" />
+							</p:column>
+
+							<p:column headerText="Cidade">
+								<h:outputText value="#{item.cidade}" />
+							</p:column>
+							
+							<p:column headerText="Entregador">
+								<h:outputText value="#{item.cpf}" />
+							</p:column>
+							
+							<p:column headerText="Alterar/Excluir">
+								<p:commandLink value="Alterar" id="alterarLnk" action="#{entregadorBBean.abrirAlterar}" icon="ui-icon-circle-check" >
+									<f:setPropertyActionListener value="#{item.codentregador}" target="#{entregadorBBean.codentregador}" />
+								</p:commandLink> / 
+								
+								<p:commandLink value="Excluir" id="excluirLnk" action="#{entregadorBBean.abrirAlterar}" icon="ui-icon-circle-check" >
+									<f:setPropertyActionListener value="#{item.codentregador}" target="#{entregadorBBean.codentregador}" />
+								</p:commandLink>
+
+							</p:column>
+						</p:dataTable>
+						
+					</h:panelGroup>
+					
+				</fieldset>
+			</h:form>
+		</ui:define>
+   	</ui:composition>
+ 
+</h:body>
+
+</html>

@@ -14,12 +14,31 @@
 	<navigation-rule>
 		<navigation-case>
 			<from-outcome>incluirAssinante</from-outcome>
-			<to-view-id>/assinante/incluir.xhtml</to-view-id>
+			<to-view-id>/pages/assinante/incluir.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
 		<navigation-case>
 			<from-outcome>listarAssinante</from-outcome>
-			<to-view-id>/assinante/listar.xhtml</to-view-id>
+			<to-view-id>/pages/assinante/listar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>incluirEntregador</from-outcome>
+			<to-view-id>/pages/entregador/incluir.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>listarEntregador</from-outcome>
+			<to-view-id>/pages/entregador/listar.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
