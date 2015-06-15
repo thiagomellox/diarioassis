@@ -5,16 +5,21 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import util.FacesUtils;
 import dao.AssinanteDAO;
 import dao.EntregadorDAO;
+import dto.AssinanteDTO;
 import entity.Assinante;
 import entity.Entregador;
 
 @ManagedBean
+@SessionScoped
 public class AssinanteBBean {
 
+	Integer codAssinante;
 	private String nome;
 	private String endereco;
 	private String bairro;
@@ -22,20 +27,24 @@ public class AssinanteBBean {
 	private String telefone;
 	private String valorMensal;
 	private String valorAnual;
-	private String dataCadastro;
-	private String dataValidade;
+	private Date dataCadastro;
+	private Date dataValidade;
+	private Integer codEntregador;
 
-	private List<Assinante> listaGrid;
+	private List<AssinanteDTO> listaGrid;
 	private List<SelectItem> entregadorSelectItem;
 	
-	private Integer codEntregador;
+	private String nomePesquisa;
+	private Integer codEntregadorPesquisa;
+	private boolean alterando;
 	
-	private AssinanteDAO dao = new AssinanteDAO();
+	private AssinanteDAO assinanteDAO = new AssinanteDAO();
 	private EntregadorDAO entregadorDAO = new EntregadorDAO();
 	
 	public AssinanteBBean() {
 		if(entregadorSelectItem == null){
 			entregadorSelectItem = new ArrayList<SelectItem>();
+			entregadorSelectItem.add(new SelectItem(0, "Selecione uma opção"));
 			for(Entregador entregador : entregadorDAO.listAll()){
 				entregadorSelectItem.add(new SelectItem(entregador.getCodentregador(), entregador.getNome()));
 			}
@@ -46,47 +55,104 @@ public class AssinanteBBean {
 	public String salvar() {
 		try{
 			Assinante ass = new Assinante();
+			if(isAlterando()){
+				ass.setCodassinante(codAssinante);
+			}
 			ass.setNome(nome);
 			ass.setCidade(cidade);
 			ass.setBairro(bairro);
 			ass.setEndereco(endereco);
 			ass.setTelefone(telefone);
-			ass.setDatacadastro(new Date());
-			ass.setDatavencimento(new Date());
+			ass.setDatacadastro(dataCadastro);
+			ass.setDatavencimento(dataValidade);
 			Entregador e = new Entregador();
-			e.setCodentregador(5);
+			e.setCodentregador(codEntregador);
 			ass.setEntregador(e);
-	
-			dao.save(ass);
-		}catch(Exception e){
-			return"";
+			if(isAlterando()){
+				assinanteDAO.update(ass);
+			}else{
+				assinanteDAO.save(ass);
+			}
+			
+			FacesUtils.addInfoMessage("Salvo com sucesso!");
+		} catch (Exception e) {
+			FacesUtils.addErrorMessage(e.getMessage());
+			return "";
 		}
 
+		return listar();
+	}
+	
+	public String listar() {
+		resetInclusao();
+		listaGrid = new ArrayList<AssinanteDTO>();
 		return "listarAssinante";
 	}
 	
-	public String abrirIncluir() {
-		
+	private void resetInclusao(){
 		nome = null;
 		endereco = null;
+		bairro = null;
 		cidade = null;
 		telefone = null;
 		valorMensal = null;
 		valorAnual = null;
 		dataCadastro = null;
 		dataValidade = null;
+		alterando = false;
+		codEntregador = null;
+	}
+	
+	public String abrirIncluir() {
+		
+		resetInclusao();
+		
+		return "incluirAssinante";
+	}
+	
+	public String abrirAlterar() {
+		if(FacesUtils.getRequestParameter("codAssinante") != null)
+			codAssinante = Integer.valueOf(FacesUtils.getRequestParameter("codAssinante"));
+		try{
+			Assinante ass = assinanteDAO.findById(codAssinante);
+			
+			nome = ass.getNome();
+			endereco = ass.getEndereco();
+			cidade = ass.getCidade();
+			bairro = ass.getBairro();
+			telefone = ass.getTelefone();
+			valorMensal = ass.getValormensal() == null ? null :ass.getValormensal().toString()  ;
+			valorAnual = ass.getValoranual() == null ? null :ass.getValoranual().toString()  ;
+			dataCadastro = ass.getDatacadastro();
+			dataValidade = ass.getDatavencimento();
+			codEntregador = ass.getEntregador().getCodentregador();
+			
+			alterando = true;
+		}catch(Exception e){
+			FacesUtils.addErrorMessage("Falha ao executar a ação");
+			return "";
+		}
 		
 		return "incluirAssinante";
 	}
 	
 	public final void pesquisar() {
-		System.out.println(nome);
-		listaGrid = new ArrayList<Assinante>();
+		listaGrid = new ArrayList<AssinanteDTO>();
 		
-		listaGrid = dao.findByName(nome,"");
+		String entregadorB = "";
+		if(codEntregadorPesquisa != null && codEntregadorPesquisa.intValue() != 0){
+			entregadorB = codEntregadorPesquisa.toString();
+		}
+		listaGrid = AssinanteDTO.entityToDtoList(assinanteDAO.findByName(nomePesquisa,entregadorB));
 		
-		System.out.println(">>>>>>>>>>>>>>>>>> " + listaGrid.size());
-		
+	}
+
+	public Integer getCodAssinante() {
+		return codAssinante;
+	}
+
+	public void setCodAssinante(Integer codAssinante) {
+		this.codAssinante = codAssinante;
 	}
 
 	public String getNome() {
@@ -137,27 +203,27 @@ public class AssinanteBBean {
 		this.valorAnual = valorAnual;
 	}
 
-	public String getDataCadastro() {
+	public Date getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(String dataCadastro) {
+	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public String getDataValidade() {
+	public Date getDataValidade() {
 		return dataValidade;
 	}
 
-	public void setDataValidade(String dataValidade) {
+	public void setDataValidade(Date dataValidade) {
 		this.dataValidade = dataValidade;
 	}
 
-	public List<Assinante> getListaGrid() {
+	public List<AssinanteDTO> getListaGrid() {
 		return listaGrid;
 	}
 
-	public void setListaGrid(List<Assinante> listaGrid) {
+	public void setListaGrid(List<AssinanteDTO> listaGrid) {
 		this.listaGrid = listaGrid;
 	}
 
@@ -183,6 +249,30 @@ public class AssinanteBBean {
 
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
+	}
+
+	public boolean isAlterando() {
+		return alterando;
+	}
+
+	public void setAlterando(boolean alterando) {
+		this.alterando = alterando;
+	}
+
+	public String getNomePesquisa() {
+		return nomePesquisa;
+	}
+
+	public void setNomePesquisa(String nomePesquisa) {
+		this.nomePesquisa = nomePesquisa;
+	}
+
+	public Integer getCodEntregadorPesquisa() {
+		return codEntregadorPesquisa;
+	}
+
+	public void setCodEntregadorPesquisa(Integer codEntregadorPesquisa) {
+		this.codEntregadorPesquisa = codEntregadorPesquisa;
 	}
 	
 

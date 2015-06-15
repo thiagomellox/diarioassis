@@ -13,23 +13,26 @@
 	<ui:composition template="/layout.xhtml">
  		<ui:define name="content"> 
  			<h:form id="incluirassinante">
+ 				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 		        <fieldset style="padding: 5px; border: 0px;">
 		        	<h:panelGroup >
 				        <h:panelGrid columns="3" cellpadding="5">
-				            <h:outputLabel for="nome" value="Nome:" />
-				            <p:inputText id="username" value="#{assinanteBBean.nome}"  label="nome" />
+				            <p:outputLabel for="nome" value="Nome:" />
+				            <p:inputText id="nome" value="#{assinanteBBean.nomePesquisa}"  label="nome" />
 				            
-					        <p:commandButton value="Pesquisar" id="pesquisar"
+					        <p:commandButton value="Pesquisar" id="pesquisar" icon="ui-icon-circle-zoomout"
 					        actionListener="#{assinanteBBean.pesquisar}" styleClass="ui-priority-primary" 
-					        update=":incluirassinante" />
+					        update=":incluirassinante" >
+					        	<f:param name="codAssinante"  value="Teste" />
+					        </p:commandButton>
 					        
 					        <p:outputLabel for="entregador" value="Entregador:" />
-					        <p:selectOneMenu id="entregador" value="#{assinanteBBean.codEntregador}">
+					        <p:selectOneMenu id="entregador" value="#{assinanteBBean.codEntregadorPesquisa}">
 					            <f:selectItems value="#{assinanteBBean.entregadorSelectItem}" />
 					        </p:selectOneMenu>
 				        </h:panelGrid>
 
-						<p:commandButton value="Incluir Novo" id="incluirBnt"
+						<p:commandButton value="Incluir Novo" id="incluirBnt" icon="ui-icon-circle-plus"
 							style="float: right;" action="#{assinanteBBean.abrirIncluir}"
 							styleClass="ui-priority-primary" />
 					</h:panelGroup>
@@ -37,7 +40,12 @@
 		        
 		        <fieldset style="padding: 5px; border: 0px;">
 					<h:panelGroup >
-						<p:dataTable var="item" id="listaGrid" value="#{assinanteBBean.listaGrid}">
+						<p:dataTable var="item" id="listaGrid" value="#{assinanteBBean.listaGrid}"
+						
+						rows="5"
+						paginatorPosition="bottom"  
+						paginator="true"
+                         paginatorTemplate="  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport}">
 							<p:column headerText="Nome">
 								<h:outputText value="#{item.nome}" />
 							</p:column>
@@ -53,8 +61,26 @@
 							<p:column headerText="Cidade">
 								<h:outputText value="#{item.cidade}" />
 							</p:column>
+							
+							<p:column headerText="Entregador">
+								<h:outputText value="#{item.entregador.nome}" />
+							</p:column>
+							
+							<p:column headerText="Alterar/Excluir">
+								<p:commandLink value="Alterar" id="alterarLnk" action="#{assinanteBBean.abrirAlterar}" icon="ui-icon-circle-check" >
+									<f:setPropertyActionListener value="#{item.codassinante}" target="#{assinanteBBean.codAssinante}" />
+								</p:commandLink> / 
+								
+								<p:commandLink value="Exluir" id="excluirLnk" action="#{assinanteBBean.abrirAlterar}" icon="ui-icon-circle-check" >
+									<f:setPropertyActionListener value="#{item.codassinante}" target="#{assinanteBBean.codAssinante}" />
+								</p:commandLink>
+
+							</p:column>
 						</p:dataTable>
+						
+						<p:remoteCommand name="carrega" actionListener="#{assinanteBBean.abrirAlterar}"/>  
 					</h:panelGroup>
+					
 				</fieldset>
 			</h:form>
 		</ui:define>

@@ -1,23 +1,14 @@
-package entity;
+package dto;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.List;
 
-@Entity
-@Table(name = "assinante")
-public class Assinante implements Serializable {
+import entity.Assinante;
+
+public class AssinanteDTO {
 	private Integer codassinante;
-	private Entregador entregador;
+	private EntregadorDTO entregador;
 	private String nome;
 	private String endereco;
 	private String bairro;
@@ -28,9 +19,6 @@ public class Assinante implements Serializable {
 	private Date datacadastro;
 	private Date datavencimento;
 
-	@Id
-	@GeneratedValue
-	@Column(name = "CODASSINANTE", unique = true, nullable = false)
 	public Integer getCodassinante() {
 		return this.codassinante;
 	}
@@ -39,17 +27,14 @@ public class Assinante implements Serializable {
 		this.codassinante = codassinante;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "CODENTREGADOR", nullable = false)
-	public Entregador getEntregador() {
+	public EntregadorDTO getEntregador() {
 		return this.entregador;
 	}
 
-	public void setEntregador(Entregador entregador) {
+	public void setEntregador(EntregadorDTO entregador) {
 		this.entregador = entregador;
 	}
 
-	@Column(name = "NOME", nullable = false, length = 45)
 	public String getNome() {
 		return this.nome;
 	}
@@ -58,7 +43,6 @@ public class Assinante implements Serializable {
 		this.nome = nome;
 	}
 
-	@Column(name = "ENDERECO", nullable = false, length = 45)
 	public String getEndereco() {
 		return this.endereco;
 	}
@@ -67,16 +51,14 @@ public class Assinante implements Serializable {
 		this.endereco = endereco;
 	}
 
-	@Column(name = "BAIRRO", nullable = false, length = 45)
 	public String getBairro() {
 		return this.bairro;
 	}
 
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
+	public void setBairro(String numero) {
+		this.bairro = numero;
 	}
 
-	@Column(name = "CIDADE", nullable = false, length = 45)
 	public String getCidade() {
 		return this.cidade;
 	}
@@ -85,7 +67,6 @@ public class Assinante implements Serializable {
 		this.cidade = cidade;
 	}
 
-	@Column(name = "TELEFONE", nullable = false, length = 15)
 	public String getTelefone() {
 		return this.telefone;
 	}
@@ -94,7 +75,6 @@ public class Assinante implements Serializable {
 		this.telefone = telefone;
 	}
 
-	@Column(name = "VALORMENSAL", precision = 6)
 	public Double getValormensal() {
 		return this.valormensal;
 	}
@@ -103,7 +83,6 @@ public class Assinante implements Serializable {
 		this.valormensal = valormensal;
 	}
 
-	@Column(name = "VALORANUAL", precision = 6)
 	public Double getValoranual() {
 		return this.valoranual;
 	}
@@ -112,8 +91,6 @@ public class Assinante implements Serializable {
 		this.valoranual = valoranual;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "DATACADASTRO", nullable = false, length = 0)
 	public Date getDatacadastro() {
 		return this.datacadastro;
 	}
@@ -122,13 +99,59 @@ public class Assinante implements Serializable {
 		this.datacadastro = datacadastro;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "DATAVENCIMENTO", nullable = false, length = 0)
 	public Date getDatavencimento() {
 		return this.datavencimento;
 	}
 
 	public void setDatavencimento(Date datavencimento) {
 		this.datavencimento = datavencimento;
+	}
+	
+	
+	
+	public AssinanteDTO() {
+	}
+
+	public AssinanteDTO(Assinante assinante) {
+		this.codassinante = assinante.getCodassinante();
+		this.entregador = new EntregadorDTO(assinante.getEntregador());
+		this.nome = assinante.getNome();
+		this.endereco = assinante.getEndereco();
+		this.bairro = assinante.getBairro();
+		this.cidade = assinante.getCidade();
+		this.telefone = assinante.getTelefone();
+		this.valormensal = assinante.getValormensal();
+		this.valoranual = assinante.getValoranual();
+		this.datacadastro = assinante.getDatacadastro();
+		this.datavencimento = assinante.getDatavencimento();
+	}
+
+	public Assinante dtoToEntity(){
+		Assinante assinante = new Assinante();
+		assinante.setCodassinante(codassinante);
+		assinante.setNome(nome);
+		assinante.setEndereco(endereco);
+		assinante.setBairro(bairro);
+		assinante.setCidade(cidade);
+		assinante.setTelefone(telefone);
+		assinante.setDatacadastro(datacadastro);
+		assinante.setDatavencimento(datavencimento);
+		assinante.setValoranual(valoranual);
+		assinante.setValormensal(valormensal);
+		assinante.setEntregador(entregador.dtoToEntity());
+		
+		return assinante;
+		
+	}
+	
+	public static List<AssinanteDTO> entityToDtoList(List<Assinante> assinantes ){
+		List<AssinanteDTO>  resultado = new ArrayList<AssinanteDTO>();
+
+		for(Assinante assinante : assinantes){
+			resultado.add(new AssinanteDTO(assinante));
+		}
+		
+		return resultado;
+		
 	}
 }

@@ -12,42 +12,63 @@
 	
 	<ui:composition template="/layout.xhtml">
  		<ui:define name="content"> 
- 			<h:form>
-				<h:panelGrid columns="2" cellpadding="5">
-		            <h:outputLabel for="nome" value="Nome:" />
-		            <p:inputText id="username" value="#{assinanteBBean.nome}" required="true" label="nome" />
+ 			<h:form id="incluir">
+ 				<p:messages id="messages" autoUpdate="true" closable="true" />
+				<h:panelGrid columns="3" cellpadding="5">
+		            <p:outputLabel  for="nome" value="Nome:" />
+		            <p:inputText id="nome" value="#{assinanteBBean.nome}" required="true" label="nome" />
+		            <p:message for="nome" />
 		 
-		            <h:outputLabel for="endereco" value="Endereço:" />
+		            <p:outputLabel  for="endereco" value="Endereço:" />
 		            <p:inputText id="endereco" value="#{assinanteBBean.endereco}"  label="endereco" />
+		            <p:message for="endereco" />
 		 
-		            <h:outputLabel for="bairro" value="Bairro:" />
+		            <p:outputLabel  for="bairro" value="Bairro:" />
 		            <p:inputText id="bairro" value="#{assinanteBBean.bairro}"  label="bairro" />
+		            <p:message for="bairro" />
 		            
-		            <h:outputLabel for="cidade" value="Cidade:" />
+		            <p:outputLabel  for="cidade" value="Cidade:" />
 		            <p:inputText id="cidade" value="#{assinanteBBean.cidade}"  label="cidade" />
+		            <p:message for="cidade" />
 		            
-		            <h:outputLabel for="telefone" value="Telefone:" />
+		            <p:outputLabel  for="telefone" value="Telefone:" />
 		            <p:inputText id="telefone" value="#{assinanteBBean.telefone}"  label="telefone" />
+		            <p:message for="telefone" />
 		            
-		            <h:outputLabel for="valorMensal" value="Valor Mensal:" />
+		            <p:outputLabel  for="valorMensal" value="Valor Mensal:" />
 		            <p:inputText id="valorMensal" value="#{assinanteBBean.valorMensal}"  label="valorMensal" />
+		            <p:message for="valorMensal" />
 		            	            
-		            <h:outputLabel for="valorAnual" value="Valor Anual:" />
+		            <p:outputLabel  for="valorAnual" value="Valor Anual:" />
 		            <p:inputText id="valorAnual" label="valorAnual">
 		            	<f:convertNumber pattern="#0.00"/>
 		            </p:inputText> 
+		            <p:message for="valorAnual" />
 		            
-		            <p:outputLabel for="dataCadastro" value="Data Cadastro:" />
-			       <p:calendar id="dataCadastro" pattern="dd/MM/yyyy" />
+		            <p:outputLabel  for="dataCadastro" value="Data Cadastro:" />
+			       <p:calendar id="dataCadastro" pattern="dd/MM/yyyy" value="#{assinanteBBean.dataCadastro}" />
+			       <p:message for="dataCadastro" />
 			       
-			       <p:outputLabel for="dataVencimento" value="Data Vencimento:" />
-			       <p:calendar id="dataVencimento" pattern="dd/MM/yyyy" />
-		            
+			       <p:outputLabel  for="dataVencimento" value="Data Vencimento:" />
+			       <p:calendar id="dataVencimento" pattern="dd/MM/yyyy" value="#{assinanteBBean.dataValidade}" />
+			       <p:message for="dataVencimento" />
+			       
+			       <p:outputLabel  for="entregador" value="Entregador:" />
+			        <p:selectOneMenu id="entregador" value="#{assinanteBBean.codEntregador}">
+			            <f:selectItems value="#{assinanteBBean.entregadorSelectItem}" />
+			        </p:selectOneMenu>
+
 					
 		        </h:panelGrid>
-		        
-		        <p:commandButton value="Salvar" id="ajax"
-		        actionListener="#{assinanteBBean.salvar}" styleClass="ui-priority-primary" />
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:commandButton value="Salvar" id="salvarBtn" update="incluir"
+						actionListener="#{assinanteBBean.salvar}"
+						styleClass="ui-priority-primary" icon="ui-icon-circle-check" />
+
+					<p:commandButton value="Cancelar" id="cancelarBnt" ignoreAutoUpdate="true" immediate="true" 
+						style="float: right;" action="#{assinanteBBean.listar}"
+						styleClass="ui-priority-primary" icon="ui-icon-close" />
+				</h:panelGrid>
 			</h:form>
 		</ui:define>
    	</ui:composition>

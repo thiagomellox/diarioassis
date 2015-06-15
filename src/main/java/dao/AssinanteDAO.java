@@ -34,7 +34,7 @@ public class AssinanteDAO extends DAO {
 
 	public Assinante update(Assinante assinante) {
 		em.getTransaction().begin();
-		em.persist(assinante);
+		em.merge(assinante);
 		em.getTransaction().commit();
 		return assinante;
 	}
@@ -46,6 +46,16 @@ public class AssinanteDAO extends DAO {
 		return queryr.getResultList();
 	}
 
+	public Assinante findById(Integer codassinante) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(" SELECT p FROM Assinante p");
+		sb.append(" WHERE p.codassinante = :codassinante");
+
+		Query query = em.createQuery(sb.toString());
+		query.setParameter("codassinante", codassinante);
+		return (Assinante) query.getSingleResult();
+	}
+	
 	public List<Assinante> findByName(String nome, String codEntregador) {
 		StringBuilder query = new StringBuilder();
 		query.append(" SELECT p FROM Assinante p");

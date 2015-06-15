@@ -17,8 +17,6 @@
 			<to-view-id>/assinante/incluir.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
 		<navigation-case>
 			<from-outcome>listarAssinante</from-outcome>
 			<to-view-id>/assinante/listar.xhtml</to-view-id>

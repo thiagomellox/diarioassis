@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14333594161040" configfile="/diarioassis/WebContent/WEB-INF/faces-navigation.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" id="pf14341400370720" outlinks="pf14341400370731 pf14341400370732 pf14341426698525" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf14341400370720" outlinks="pf14341400370731 pf14341400370732 pf14343871049160" path="*"/>
   <nodes xsi:type="pageflow:PFPage" name="index.xhtml" id="pf14341400370733" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14341400370731" path="/index.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="assinante/incluir.xhtml" id="pf14341400370734" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf14341400370732" path="/assinante/incluir.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="assinante/listar.xhtml" id="pf14341426698526" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf14341426698525" path="/assinante/listar.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="assinante/incluir.xhtml" id="pf14341400370734" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14341400370732" path="/assinante/incluir.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="assinante/listar.xhtml" id="pf14343871049171" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf14343871049160" path="/assinante/listar.xhtml"/>
   <links id="pf14341400370731" target="pf14341400370733" source="pf14341400370720" outcome="home" redirect="true"/>
   <links id="pf14341400370732" target="pf14341400370734" source="pf14341400370720" outcome="incluirAssinante" redirect="true"/>
-  <links id="pf14341426698525" target="pf14341426698526" source="pf14341400370720" outcome="listarAssinante" redirect="true"/>
+  <links id="pf14343871049160" target="pf14343871049171" source="pf14341400370720" outcome="listarAssinante" redirect="true"/>
 </pageflow:Pageflow>
