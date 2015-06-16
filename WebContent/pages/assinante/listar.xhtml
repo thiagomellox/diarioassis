@@ -13,7 +13,10 @@
 	<ui:composition template="/layout.xhtml">
  		<ui:define name="content"> 
  			<h:form id="incluirassinante">
- 				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+ 				<div class="titulo">
+	 				<p:outputLabel  value="-- Pesquisar Assinante" />
+ 				</div>
+ 				<p:messages id="messages" autoUpdate="true" closable="true" />
 		        <fieldset style="padding: 5px; border: 0px;">
 		        	<h:panelGroup >
 				        <h:panelGrid columns="3" cellpadding="5">

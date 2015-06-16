@@ -13,10 +13,10 @@
 	<ui:composition template="/layout.xhtml">
  		<ui:define name="content"> 
  			<h:form id="incluir">
-				<fieldset style="padding: 5px; border: 0px;">
-					<p:outputLabel value="-> Incluir/Alterar Entregador" />
-					<p:messages id="messages" autoUpdate="true" closable="true" />
-				</fieldset>
+				<div class="titulo">
+	 				<p:outputLabel  value="-- Incluir/Alterar Entregador" />
+ 				</div>
+ 				<p:messages id="messages" autoUpdate="true" closable="true" />
 				<h:panelGrid columns="3" cellpadding="5">
 		            <p:outputLabel  for="nome" value="Nome:" />
 		            <p:inputText id="nome" value="#{entregadorBBean.nome}" required="true" label="nome" />
