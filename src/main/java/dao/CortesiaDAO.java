@@ -1,50 +1,55 @@
 package dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import entity.Cortesia;
 
-public class CortesiaDAO {
-	private Session session;
-	private static CortesiaDAO instance;
+public class CortesiaDAO extends DAO {
+	private EntityManager em;
+
 
 	public CortesiaDAO() {
-//		this.session = HibernateFactory.getSession();
-	}
-
-	public static CortesiaDAO getInstance() {
-		if (instance == null) {
-			instance = new CortesiaDAO();
-		}
-		return instance;
+		em = getEntityManager();
 	}
 
 	public Cortesia save(Cortesia cortesia) {
-		this.session.beginTransaction();
-		this.session.save(cortesia);
-		this.session.getTransaction().commit();
+		em.getTransaction().begin();
+		em.persist(cortesia);
+		em.getTransaction().commit();
 		return cortesia;
 	}
 
 	public void delete(Cortesia cortesia) {
-		this.session.beginTransaction();
-		this.session.delete(cortesia);
-		this.session.getTransaction().commit();
+		em.getTransaction().begin();
+		em.remove(cortesia);
+		em.getTransaction().commit();
 	}
 
 	public Cortesia update(Cortesia cortesia) {
-		this.session.beginTransaction();
-		this.session.update(cortesia);
-		this.session.getTransaction().commit();
+		em.getTransaction().begin();
+		em.merge(cortesia);
+		em.getTransaction().commit();
 		return cortesia;
 	}
 
 	public List<Cortesia> listAll() {
-		return (ArrayList) this.session.createCriteria(Cortesia.class).list();
+		StringBuilder query = new StringBuilder();
+		query.append(" SELECT p FROM Cortesia p");
+		Query queryr = em.createQuery(query.toString());
+		return queryr.getResultList();
+	}
+	
+	public Cortesia findById(Integer codCortesia) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(" SELECT p FROM Cortesia p");
+		sb.append(" WHERE p.codCortesia = :codCortesia");
+
+		Query query = em.createQuery(sb.toString());
+		query.setParameter("codCortesia", codCortesia);
+		return (Cortesia) query.getSingleResult();
 	}
 
 	public List<Cortesia> findByName(String nome, String codEntregador) {
@@ -55,8 +60,8 @@ public class CortesiaDAO {
 			query.append(" AND p.entregador.codentregador = " + codEntregador
 					+ ")");
 		}
-		Query queryr = this.session.createQuery(query.toString());
-		return queryr.list();
+		Query queryr = em.createQuery(query.toString());
+		return queryr.getResultList();
 	}
 
 	public List<Cortesia> findByDate(String data) {
@@ -64,8 +69,8 @@ public class CortesiaDAO {
 		query.append(" SELECT p FROM Cortesia p");
 		query.append(" WHERE Month(p.datavencimento) = Month('" + data
 				+ "') AND Year(p.datavencimento)  = Year('" + data + "')");
-		Query queryr = this.session.createQuery(query.toString());
-		return queryr.list();
+		Query queryr = em.createQuery(query.toString());
+		return queryr.getResultList();
 	}
 
 	public List<Cortesia> findByEntregadorDAta(String codEntregador,
@@ -83,7 +88,7 @@ public class CortesiaDAO {
 			query.append("  p.datavencimento BETWEEN '" + dataInicio
 					+ "' AND '" + dataFim + "'");
 		}
-		Query queryr = this.session.createQuery(query.toString());
-		return queryr.list();
+		Query queryr = em.createQuery(query.toString());
+		return queryr.getResultList();
 	}
 }

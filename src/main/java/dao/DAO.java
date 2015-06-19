@@ -13,7 +13,7 @@ public class DAO {
 	 * fabrica que criamos para os Session que vem do SessionFactory Aqui temos
 	 * apenas nomeclatura diferente, pense assim.
 	 */
-	public EntityManager getEntityManager() {
+	public  EntityManager getEntityManager() {
 
 		// responsavel pela persistencia
 		return emf.createEntityManager();

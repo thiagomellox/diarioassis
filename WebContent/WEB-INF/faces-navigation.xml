@@ -29,6 +29,22 @@
 	
 	<navigation-rule>
 		<navigation-case>
+			<from-outcome>incluirCortesia</from-outcome>
+			<to-view-id>/pages/cortesia/incluir.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
+			<from-outcome>listarCortesia</from-outcome>
+			<to-view-id>/pages/cortesia/listar.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<navigation-case>
 			<from-outcome>incluirEntregador</from-outcome>
 			<to-view-id>/pages/entregador/incluir.xhtml</to-view-id>
 			<redirect />

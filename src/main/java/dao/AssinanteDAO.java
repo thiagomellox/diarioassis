@@ -16,7 +16,6 @@ public class AssinanteDAO extends DAO {
 		em = getEntityManager();
 	}
 
-
 	
 	public Assinante save(Assinante assinante) {
 		 

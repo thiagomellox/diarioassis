@@ -1,17 +1,11 @@
 package dto;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.List;
+
+import entity.Assinante;
+import entity.Cortesia;
 
 public class CortesiaDTO {
 	private Integer codCortesia;
@@ -94,5 +88,47 @@ public class CortesiaDTO {
 
 	public void setDatavencimento(Date datavencimento) {
 		this.datavencimento = datavencimento;
+	}
+	
+	public CortesiaDTO() {
+	}
+
+	public CortesiaDTO(Cortesia cortesia) {
+		this.codCortesia = cortesia.getCodCortesia();
+		this.entregador = new EntregadorDTO(cortesia.getEntregador());
+		this.nome = cortesia.getNome();
+		this.endereco = cortesia.getEndereco();
+		this.bairro = cortesia.getBairro();
+		this.cidade = cortesia.getCidade();
+		this.telefone = cortesia.getTelefone();
+		this.datacadastro = cortesia.getDatacadastro();
+		this.datavencimento = cortesia.getDatavencimento();
+	}
+
+	public Cortesia dtoToEntity(){
+		Cortesia cortesia = new Cortesia();
+		cortesia.setCodCortesia(codCortesia);
+		cortesia.setNome(nome);
+		cortesia.setEndereco(endereco);
+		cortesia.setBairro(bairro);
+		cortesia.setCidade(cidade);
+		cortesia.setTelefone(telefone);
+		cortesia.setDatacadastro(datacadastro);
+		cortesia.setDatavencimento(datavencimento);
+		cortesia.setEntregador(entregador.dtoToEntity());
+		
+		return cortesia;
+		
+	}
+	
+	public static List<CortesiaDTO> entityToDtoList(List<Cortesia> cortesias ){
+		List<CortesiaDTO>  resultado = new ArrayList<CortesiaDTO>();
+
+		for(Cortesia cortesia : cortesias){
+			resultado.add(new CortesiaDTO(cortesia));
+		}
+		
+		return resultado;
+		
 	}
 }

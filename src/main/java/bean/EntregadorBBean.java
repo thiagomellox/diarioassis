@@ -57,12 +57,13 @@ public class EntregadorBBean {
 			}
 			
 			FacesUtils.addInfoMessage("Salvo com sucesso!");
+			return "listarEntregador";
 		} catch (Exception e) {
 			FacesUtils.addErrorMessage(e.getMessage());
 			return "";
 		}
 
-		return listar();
+		//return listar();
 	}
 	
 	public String listar() {

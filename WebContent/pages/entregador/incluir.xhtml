@@ -44,14 +44,27 @@
 		            
 		        </h:panelGrid>
 				<h:panelGrid columns="2" cellpadding="5">
-					<p:commandButton value="Salvar" id="salvarBtn" update="incluir"
+					<p:commandButton value="Salvar" id="salvarBtn" onsuccess="PF('dlg2').show();"  update="incluir"
 						actionListener="#{entregadorBBean.salvar}"
 						styleClass="ui-priority-primary" icon="ui-icon-circle-check" />
 
-					<p:commandButton value="Cancelar" id="cancelarBnt" ignoreAutoUpdate="true" immediate="true" 
+					<p:commandButton value="Cancelar"  id="cancelarBnt" ignoreAutoUpdate="true" immediate="true" 
 						style="float: right;" action="#{entregadorBBean.listar}"
 						styleClass="ui-priority-primary" icon="ui-icon-close" />
 				</h:panelGrid>
+				
+				 <p:commandButton value="Modal" type="button" onclick="PF('dlg2').show();"  />
+				
+				<p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true" height="80" showHeader="false" >
+				    <div class="titulo" style="margin-bottom: 10px;">
+				    	<h:outputText value="Registro salvo com sucesso!" />
+				    </div>
+				    <div >
+					    <p:commandButton value="Ok" id="salvoModal" ignoreAutoUpdate="true" immediate="true" 
+							style="float: right;" action="#{entregadorBBean.listar}"
+							styleClass="ui-priority-primary" icon="ui-icon-close" />
+					</div>
+				</p:dialog> 
 			</h:form>
 		</ui:define>
    	</ui:composition>
