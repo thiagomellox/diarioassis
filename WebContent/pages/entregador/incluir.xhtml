@@ -19,27 +19,27 @@
  				<p:messages id="messages" autoUpdate="true" closable="true" />
 				<h:panelGrid columns="3" cellpadding="5">
 		            <p:outputLabel  for="nome" value="Nome:" />
-		            <p:inputText id="nome" value="#{entregadorBBean.nome}" required="true" label="nome" />
+		            <p:inputText maxlength="45" id="nome" value="#{entregadorBBean.nome}" required="true" label="nome" />
 		            <p:message for="nome" />
 		 
 		            <p:outputLabel  for="endereco" value="Endereço:" />
-		            <p:inputText id="endereco" value="#{entregadorBBean.endereco}"  label="endereco" />
+		            <p:inputText maxlength="100" id="endereco" value="#{entregadorBBean.endereco}"  label="endereco" />
 		            <p:message for="endereco" />
 		 
 		            <p:outputLabel  for="bairro" value="Bairro:" />
-		            <p:inputText id="bairro" value="#{entregadorBBean.bairro}"  label="bairro" />
+		            <p:inputText maxlength="45" id="bairro" value="#{entregadorBBean.bairro}"  label="bairro" />
 		            <p:message for="bairro" />
 		            
 		            <p:outputLabel  for="cidade" value="Cidade:" />
-		            <p:inputText id="cidade" value="#{entregadorBBean.cidade}"  label="cidade" />
+		            <p:inputText maxlength="45" id="cidade" value="#{entregadorBBean.cidade}"  label="cidade" />
 		            <p:message for="cidade" />
 		            
 		            <p:outputLabel  for="telefone" value="Telefone:" />
-		            <p:inputText id="telefone" value="#{entregadorBBean.telefone}"  label="telefone" />
+		            <p:inputMask id="telefone" value="#{entregadorBBean.telefone}"  label="telefone"  mask="(99) 9999 9999?9"/>
 		            <p:message for="telefone" />
 		            
 		            <p:outputLabel  for="cpf" value="Cpf:" />
-		            <p:inputText id="cpf" value="#{entregadorBBean.cpf}"  label="cpf" />
+		            <p:inputMask id="cpf" value="#{entregadorBBean.cpf}"  label="cpf" mask="999.999.999-99" />
 		            <p:message for="cpf" />
 		            
 		        </h:panelGrid>
