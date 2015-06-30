@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"> 
+    
+     
+
+<h:body>
+	
+	<ui:composition template="/layout.xhtml">
+ 		<ui:define name="content"> 
+ 			<h:form id="listarCortesia">
+ 				<div class="titulo">
+	 				<p:outputLabel  value="-- Pesquisar Cortesia" />
+ 				</div>
+ 				<p:messages id="messages" autoUpdate="true" closable="true" />
+		        <fieldset style="padding: 5px; border: 0px;">
+		        	<h:panelGroup >
+				        <h:panelGrid columns="3" cellpadding="5">
+				            <p:outputLabel for="nome" value="Nome:" />
+				            <p:inputText id="nome" value="#{cortesiaBBean.nomePesquisa}"  label="nome" />
+				            
+					        <p:commandButton value="Pesquisar" id="pesquisar" icon="ui-icon-circle-zoomout"
+					        actionListener="#{cortesiaBBean.pesquisar}" styleClass="ui-priority-primary" 
+					        update=":listarCortesia" >
+					        </p:commandButton>
+					        
+					        <p:outputLabel for="entregador" value="Entregador:" />
+					        <p:selectOneMenu id="entregador" value="#{cortesiaBBean.codEntregadorPesquisa}">
+					            <f:selectItems value="#{cortesiaBBean.entregadorSelectItem}" />
+					        </p:selectOneMenu>
+				        </h:panelGrid>
+
+						<p:commandButton value="Incluir Novo" id="incluirBnt" icon="ui-icon-circle-plus"
+							style="float: right;" action="#{cortesiaBBean.abrirIncluir}"
+							styleClass="ui-priority-primary" />
+					</h:panelGroup>
+		        </fieldset>
+		        
+		        <fieldset style="padding: 5px; border: 0px;">
+					<h:panelGroup >
+						<p:dataTable var="item" id="listaGrid" value="#{cortesiaBBean.listaGrid}"
+						
+						rows="10"
+						paginatorPosition="bottom"  
+						paginator="true"
+                         paginatorTemplate="  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {CurrentPageReport} {Exporters}">
+							
+							<f:facet name="{Exporters}">
+					            <h:commandLink>
+					                <p:graphicImage url="/images/xls-icon24.png" width="24"/>
+					                <p:dataExporter type="xls" target="listaGrid" fileName="cortesia" />
+					            </h:commandLink>
+					 
+					            <h:commandLink>
+					                <p:graphicImage url="/images/pdf-icon24.png" width="24"/>
+					                <p:dataExporter type="pdf" target="listaGrid" fileName="cortesia"/>
+					            </h:commandLink>
+					 
+					        </f:facet>
+							
+							<p:column headerText="Nome">
+								<h:outputText value="#{item.nome}" />
+							</p:column>
+
+							<p:column headerText="Endereço">
+								<h:outputText value="#{item.endereco}" />
+							</p:column>
+
+							<p:column headerText="Bairro">
+								<h:outputText value="#{item.bairro}" />
+							</p:column>
+
+							<p:column headerText="Cidade">
+								<h:outputText value="#{item.cidade}" />
+							</p:column>
+							
+							<p:column headerText="Entregador">
+								<h:outputText value="#{item.entregador.nome}" />
+							</p:column>
+							
+							<p:column headerText="Alterar / Excluir" exportable="false">
+								<p:commandLink value="Alterar" id="alterarLnk" action="#{cortesiaBBean.abrirAlterar}" icon="ui-icon-circle-check" >
+									<f:setPropertyActionListener value="#{item.codCortesia}" target="#{cortesiaBBean.codCortesia}" />
+								</p:commandLink> / 
+								
+								<p:commandLink value="Excluir" id="excluirLnk" action="#{cortesiaBBean.abrirAlterar}" icon="ui-icon-circle-check" >
+									<f:setPropertyActionListener value="#{item.codCortesia}" target="#{cortesiaBBean.codCortesia}" />
+								</p:commandLink>
+
+							</p:column>
+						</p:dataTable>
+						
+					</h:panelGroup>
+					
+				</fieldset>
+			</h:form>
+		</ui:define>
+   	</ui:composition>
+ 
+</h:body>
+
+</html>

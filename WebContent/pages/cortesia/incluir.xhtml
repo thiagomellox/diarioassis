@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"> 
+    
+     
+
+<h:body>
+	
+	<ui:composition template="/layout.xhtml">
+ 		<ui:define name="content"> 
+ 			<h:form id="incluir">
+ 				<div class="titulo">
+	 				<p:outputLabel  value="-- Incluir/Alterar Cortesia" />
+ 				</div>
+ 				<p:messages id="messages" autoUpdate="true" closable="true" />
+				<h:panelGrid columns="3" cellpadding="5">
+		            <p:outputLabel  for="nome" value="Nome:" />
+		            <p:inputText maxlength="45"  id="nome" value="#{cortesiaBBean.nome}" required="true" label="nome" />
+		            <p:message for="nome" />
+		 
+		            <p:outputLabel  for="endereco" value="Endereço:" />
+		            <p:inputText maxlength="100"  id="endereco" value="#{cortesiaBBean.endereco}"  label="endereco" />
+		            <p:message for="endereco" />
+		 
+		            <p:outputLabel  for="bairro" value="Bairro:" />
+		            <p:inputText maxlength="45"  id="bairro" value="#{cortesiaBBean.bairro}"  label="bairro" />
+		            <p:message for="bairro" />
+		            
+		            <p:outputLabel  for="cidade" value="Cidade:" />
+		            <p:inputText maxlength="45"  id="cidade" value="#{cortesiaBBean.cidade}"  label="cidade" />
+		            <p:message for="cidade" />
+		            
+		            <p:outputLabel  for="telefone" value="Telefone:" />
+		            <p:inputMask id="telefone" value="#{cortesiaBBean.telefone}"  label="telefone"  mask="(99) 9999 9999?9"/>
+		            <p:message for="telefone" />
+		            
+		            <p:outputLabel  for="dataCadastro" value="Data Cadastro:" />
+			       <p:calendar id="dataCadastro" pattern="dd/MM/yyyy" value="#{cortesiaBBean.dataCadastro}" />
+			       <p:message for="dataCadastro" />
+			       
+			       <p:outputLabel  for="dataVencimento" value="Data Vencimento:" />
+			       <p:calendar id="dataVencimento" pattern="dd/MM/yyyy" value="#{cortesiaBBean.dataValidade}" />
+			       <p:message for="dataVencimento" />
+			       
+			       <p:outputLabel  for="entregador" value="Entregador:" />
+			        <p:selectOneMenu id="entregador" value="#{cortesiaBBean.codEntregador}">
+			            <f:selectItems value="#{cortesiaBBean.entregadorSelectItem}" />
+			        </p:selectOneMenu>
+
+					
+		        </h:panelGrid>
+				<h:panelGrid columns="2" cellpadding="5">
+					<p:commandButton value="Salvar" id="salvarBtn" update="incluir"
+						actionListener="#{cortesiaBBean.salvar}"
+						styleClass="ui-priority-primary" icon="ui-icon-circle-check" />
+
+					<p:commandButton value="Cancelar" id="cancelarBnt" ignoreAutoUpdate="true" immediate="true" 
+						style="float: right;" action="#{cortesiaBBean.listar}"
+						styleClass="ui-priority-primary" icon="ui-icon-close" />
+				</h:panelGrid>
+			</h:form>
+		</ui:define>
+   	</ui:composition>
+ 
+</h:body>
+
+</html>
