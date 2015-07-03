@@ -12,6 +12,28 @@
 	
 	<ui:composition template="/layout.xhtml">
  		<ui:define name="content"> 
+ 			<script>
+ 			function mascara(o,f){   
+ 			    v_obj=o   
+ 			    v_fun=f   
+ 			    setTimeout("execmascara()",1)   
+ 			}   
+ 			  
+ 			function execmascara(){   
+ 			    v_obj.value=v_fun(v_obj.value)   
+ 			}   
+ 			  
+ 			function moeda(v){   
+ 			    v=v.replace(/\D/g,""); // permite digitar apenas numero   
+ 			    v=v.replace(/(\d{1})(\d{15})$/,"$1.$2") // coloca ponto antes dos ultimos digitos   
+ 			    v=v.replace(/(\d{1})(\d{11})$/,"$1.$2") // coloca ponto antes dos ultimos 11 digitos   
+ 			    v=v.replace(/(\d{1})(\d{8})$/,"$1.$2") // coloca ponto antes dos ultimos 8 digitos   
+ 			    v=v.replace(/(\d{1})(\d{5})$/,"$1.$2") // coloca ponto antes dos ultimos 5 digitos   
+ 			    v=v.replace(/(\d{1})(\d{1,2})$/,"$1,$2") // coloca virgula antes dos ultimos 2 digitos   
+ 			    return v;   
+ 			}  
+ 			</script>
+ 		
  			<h:form id="incluir">
  				<div class="titulo">
 	 				<p:outputLabel  value="-- Incluir/Alterar Assinante" />
@@ -23,48 +45,49 @@
 		            <p:message for="nome" />
 		 
 		            <p:outputLabel  for="endereco" value="Endereço:" />
-		            <p:inputText maxlength="100" id="endereco" value="#{assinanteBBean.endereco}"  label="endereco" size="50" />
+		            <p:inputText maxlength="100" id="endereco" value="#{assinanteBBean.endereco}" required="true"   label="endereco" size="50" />
 		            <p:message for="endereco" />
 		 
 		            <p:outputLabel  for="bairro" value="Bairro:" />
-		            <p:inputText maxlength="45" id="bairro" value="#{assinanteBBean.bairro}"  label="bairro" size="50" />
+		            <p:inputText maxlength="45" id="bairro" value="#{assinanteBBean.bairro}" required="true"   label="bairro" size="50" />
 		            <p:message for="bairro" />
 		            
 		            <p:outputLabel  for="cidade" value="Cidade:" />
-		            <p:inputText maxlength="45" id="cidade" value="#{assinanteBBean.cidade}"  label="cidade" size="50" />
+		            <p:inputText maxlength="45" id="cidade" value="#{assinanteBBean.cidade}" required="true"  label="cidade" size="50" />
 		            <p:message for="cidade" />
 		            
 		            <p:outputLabel  for="telefone" value="Telefone:" />
 		            <p:inputMask id="telefone" value="#{assinanteBBean.telefone}"  label="telefone"   mask="(99) 9999 9999?9"/>
 		            <p:message for="telefone" />
 		            
-		            <p:outputLabel  for="valorMensal" value="Valor Mensal:" />
-		            <p:inputText id="valorMensal" value="#{assinanteBBean.valorMensal}"  label="valorMensal" />
+		            <p:outputLabel  for="valorMensal"  value="Valor Mensal:" />
+		            <p:inputText id="valorMensal" onkeydown="mascara(this,moeda)"  value="#{assinanteBBean.valorMensal}"  label="valorMensal" >
+		            </p:inputText>
 		            <p:message for="valorMensal" />
 		            	            
 		            <p:outputLabel  for="valorAnual" value="Valor Anual:" />
-		            <p:inputText id="valorAnual" label="valorAnual">
-		            	<f:convertNumber pattern="#0.00"/>
+		            <p:inputText id="valorAnual" onkeydown="mascara(this,moeda)"  value="#{assinanteBBean.valorAnual}" label="valorAnual">
 		            </p:inputText> 
 		            <p:message for="valorAnual" />
 		            
 		            <p:outputLabel  for="dataCadastro" value="Data Cadastro:" />
-			       <p:calendar id="dataCadastro" pattern="dd/MM/yyyy" value="#{assinanteBBean.dataCadastro}" />
+			       <p:calendar id="dataCadastro" pattern="dd/MM/yyyy" value="#{assinanteBBean.dataCadastro}" required="true"  />
 			       <p:message for="dataCadastro" />
 			       
 			       <p:outputLabel  for="dataVencimento" value="Data Vencimento:" />
-			       <p:calendar id="dataVencimento" pattern="dd/MM/yyyy" value="#{assinanteBBean.dataValidade}" />
+			       <p:calendar id="dataVencimento" pattern="dd/MM/yyyy" value="#{assinanteBBean.dataValidade}" required="true"  />
 			       <p:message for="dataVencimento" />
 			       
 			       <p:outputLabel  for="entregador" value="Entregador:" />
-			        <p:selectOneMenu id="entregador" value="#{assinanteBBean.codEntregador}">
+			        <p:selectOneMenu id="entregador" value="#{assinanteBBean.codEntregador}" required="true" >
 			            <f:selectItems value="#{assinanteBBean.entregadorSelectItem}" />
 			        </p:selectOneMenu>
+			        <p:message for="entregador" />
 
 					
 		        </h:panelGrid>
 				<h:panelGrid columns="2" cellpadding="5">
-					<p:commandButton value="Salvar" id="salvarBtn" update="incluir"
+					<p:commandButton value="Salvar" id="salvarBtn"  oncomplete="if (args.sucess){PF('dlg2').show();}"  update="incluir"
 						actionListener="#{assinanteBBean.salvar}"
 						styleClass="ui-priority-primary" icon="ui-icon-circle-check" />
 
@@ -72,6 +95,17 @@
 						style="float: right;" action="#{assinanteBBean.listar}"
 						styleClass="ui-priority-primary" icon="ui-icon-close" />
 				</h:panelGrid>
+				
+				<p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true" height="80" showHeader="false" >
+				    <div class="titulo" style="margin-bottom: 10px;">
+				    	<h:outputText value="Registro salvo com sucesso!" />
+				    </div>
+				    <div >
+					    <p:commandButton value="Ok" id="salvoModal" ignoreAutoUpdate="true" immediate="true" 
+							style="float: right;" action="#{assinanteBBean.listar}"
+							styleClass="ui-priority-primary" icon="ui-icon-close" />
+					</div>
+				</p:dialog> 
 			</h:form>
 		</ui:define>
    	</ui:composition>

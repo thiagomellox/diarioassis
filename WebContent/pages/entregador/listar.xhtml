@@ -73,16 +73,18 @@
 								<h:outputText value="#{item.cidade}" />
 							</p:column>
 							
-							<p:column headerText="Entregador">
+							<p:column headerText="CPF">
 								<h:outputText value="#{item.cpf}" />
 							</p:column>
 							
-							<p:column headerText="Alterar/Excluir" exportable="false">
-								<p:commandLink value="Alterar" id="alterarLnk" action="#{entregadorBBean.abrirAlterar}" icon="ui-icon-circle-check" >
+							<p:column  exportable="false" width="80">
+								<p:commandLink title="Alterar" id="alterarLnk" action="#{entregadorBBean.abrirAlterar}" icon="ui-icon-circle-check" >
+									<p:graphicImage url="/images/file_edit.png" width="30"/>
 									<f:setPropertyActionListener value="#{item.codentregador}" target="#{entregadorBBean.codentregador}" />
-								</p:commandLink> / 
+								</p:commandLink> &nbsp;&nbsp;
 								
-								<p:commandLink value="Excluir" id="excluirLnk" action="#{entregadorBBean.abrirAlterar}" icon="ui-icon-circle-check" >
+								<p:commandLink title="Excluir" id="excluirLnk" action="#{entregadorBBean.abrirAlterar}" icon="ui-icon-circle-check" >
+									<p:graphicImage url="/images/file_delete.png" width="30"/>
 									<f:setPropertyActionListener value="#{item.codentregador}" target="#{entregadorBBean.codentregador}" />
 								</p:commandLink>
 

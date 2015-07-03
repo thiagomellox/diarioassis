@@ -23,15 +23,15 @@
 		            <p:message for="nome" />
 		 
 		            <p:outputLabel  for="endereco" value="Endereço:" />
-		            <p:inputText maxlength="100"  id="endereco" value="#{cortesiaBBean.endereco}"  label="endereco" size="50" />
+		            <p:inputText maxlength="100"  id="endereco" value="#{cortesiaBBean.endereco}" required="true"  label="endereco" size="50" />
 		            <p:message for="endereco" />
 		 
 		            <p:outputLabel  for="bairro" value="Bairro:" />
-		            <p:inputText maxlength="45"  id="bairro" value="#{cortesiaBBean.bairro}"  label="bairro" size="50" />
+		            <p:inputText maxlength="45"  id="bairro" value="#{cortesiaBBean.bairro}" required="true"  label="bairro" size="50" />
 		            <p:message for="bairro" />
 		            
 		            <p:outputLabel  for="cidade" value="Cidade:" />
-		            <p:inputText maxlength="45"  id="cidade" value="#{cortesiaBBean.cidade}"  label="cidade" size="50" />
+		            <p:inputText maxlength="45"  id="cidade" value="#{cortesiaBBean.cidade}" required="true"  label="cidade" size="50" />
 		            <p:message for="cidade" />
 		            
 		            <p:outputLabel  for="telefone" value="Telefone:" />
@@ -39,22 +39,23 @@
 		            <p:message for="telefone" />
 		            
 		            <p:outputLabel  for="dataCadastro" value="Data Cadastro:" />
-			       <p:calendar id="dataCadastro" pattern="dd/MM/yyyy" value="#{cortesiaBBean.dataCadastro}" />
+			       <p:calendar id="dataCadastro" pattern="dd/MM/yyyy" value="#{cortesiaBBean.dataCadastro}" required="true"  />
 			       <p:message for="dataCadastro" />
 			       
 			       <p:outputLabel  for="dataVencimento" value="Data Vencimento:" />
-			       <p:calendar id="dataVencimento" pattern="dd/MM/yyyy" value="#{cortesiaBBean.dataValidade}" />
+			       <p:calendar id="dataVencimento" pattern="dd/MM/yyyy" value="#{cortesiaBBean.dataValidade}" required="true"  />
 			       <p:message for="dataVencimento" />
 			       
 			       <p:outputLabel  for="entregador" value="Entregador:" />
-			        <p:selectOneMenu id="entregador" value="#{cortesiaBBean.codEntregador}">
+			        <p:selectOneMenu id="entregador" value="#{cortesiaBBean.codEntregador}" required="true" >
 			            <f:selectItems value="#{cortesiaBBean.entregadorSelectItem}" />
 			        </p:selectOneMenu>
+			        <p:message for="entregador" />
 
 					
 		        </h:panelGrid>
 				<h:panelGrid columns="2" cellpadding="5">
-					<p:commandButton value="Salvar" id="salvarBtn" update="incluir"
+					<p:commandButton value="Salvar" id="salvarBtn"  oncomplete="if (args.sucess){PF('dlg2').show();}"  update="incluir"
 						actionListener="#{cortesiaBBean.salvar}"
 						styleClass="ui-priority-primary" icon="ui-icon-circle-check" />
 
@@ -62,6 +63,17 @@
 						style="float: right;" action="#{cortesiaBBean.listar}"
 						styleClass="ui-priority-primary" icon="ui-icon-close" />
 				</h:panelGrid>
+				
+				<p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true" height="80" showHeader="false" >
+				    <div class="titulo" style="margin-bottom: 10px;">
+				    	<h:outputText value="Registro salvo com sucesso!" />
+				    </div>
+				    <div >
+					    <p:commandButton value="Ok" id="salvoModal" ignoreAutoUpdate="true" immediate="true" 
+							style="float: right;" action="#{cortesiaBBean.listar}"
+							styleClass="ui-priority-primary" icon="ui-icon-close" />
+					</div>
+				</p:dialog> 
 			</h:form>
 		</ui:define>
    	</ui:composition>

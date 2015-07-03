@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.context.RequestContext;
+
 import util.FacesUtils;
 import dao.CortesiaDAO;
 import dao.EntregadorDAO;
@@ -74,12 +76,13 @@ public class CortesiaBBean {
 			}
 			
 			FacesUtils.addInfoMessage("Salvo com sucesso!");
+			RequestContext.getCurrentInstance().addCallbackParam("sucess", true);
 		} catch (Exception e) {
-			FacesUtils.addErrorMessage(e.getMessage());
-			return "";
+			FacesUtils.addErrorMessage("Houve um problema ao tentar salvar. " + e.getMessage());
+			RequestContext.getCurrentInstance().addCallbackParam("sucess", false);
 		}
-
-		return listar();
+		
+		return "";
 	}
 	
 	public String listar() {

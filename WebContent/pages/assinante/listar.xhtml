@@ -81,12 +81,14 @@
 								<h:outputText value="#{item.entregador.nome}" />
 							</p:column>
 							
-							<p:column headerText="Alterar / Excluir"  exportable="false">
-								<p:commandLink value="Alterar" id="alterarLnk" action="#{assinanteBBean.abrirAlterar}" icon="ui-icon-circle-check" >
+							<p:column  exportable="false" width="80">
+								<p:commandLink title="Alterar" id="alterarLnk" action="#{assinanteBBean.abrirAlterar}">
+									<p:graphicImage url="/images/file_edit.png" width="30"/>
 									<f:setPropertyActionListener value="#{item.codassinante}" target="#{assinanteBBean.codAssinante}" />
-								</p:commandLink> / 
+								</p:commandLink> &nbsp;&nbsp;
 								
-								<p:commandLink value="Excluir" id="excluirLnk" action="#{assinanteBBean.abrirAlterar}" icon="ui-icon-circle-check" >
+								<p:commandLink title="Excluir" id="excluirLnk" action="#{assinanteBBean.abrirAlterar}" >
+									<p:graphicImage url="/images/file_delete.png" width="30"/>
 									<f:setPropertyActionListener value="#{item.codassinante}" target="#{assinanteBBean.codAssinante}" />
 								</p:commandLink>
 

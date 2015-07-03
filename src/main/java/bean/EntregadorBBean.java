@@ -1,19 +1,17 @@
 package bean;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.SelectItem;
+
+import org.primefaces.context.RequestContext;
 
 import util.FacesUtils;
 import dao.AssinanteDAO;
 import dao.EntregadorDAO;
-import dto.AssinanteDTO;
 import dto.EntregadorDTO;
-import entity.Assinante;
 import entity.Entregador;
 
 @ManagedBean
@@ -57,9 +55,11 @@ public class EntregadorBBean {
 			}
 			
 			FacesUtils.addInfoMessage("Salvo com sucesso!");
-			return "listarEntregador";
+			RequestContext.getCurrentInstance().addCallbackParam("sucess", true);
+			return "";
 		} catch (Exception e) {
-			FacesUtils.addErrorMessage(e.getMessage());
+			FacesUtils.addErrorMessage("Houve um problema ao tentar salvar. " + e.getMessage());
+			RequestContext.getCurrentInstance().addCallbackParam("sucess", false);
 			return "";
 		}
 

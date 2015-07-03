@@ -8,6 +8,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
+import org.primefaces.context.RequestContext;
+
+import util.DecimalConverter;
 import util.FacesUtils;
 import dao.AssinanteDAO;
 import dao.EntregadorDAO;
@@ -75,12 +78,13 @@ public class AssinanteBBean {
 			}
 			
 			FacesUtils.addInfoMessage("Salvo com sucesso!");
+			RequestContext.getCurrentInstance().addCallbackParam("sucess", true);
 		} catch (Exception e) {
-			FacesUtils.addErrorMessage(e.getMessage());
-			return "";
+			FacesUtils.addErrorMessage("Houve um problema ao tentar salvar. " + e.getMessage());
+			RequestContext.getCurrentInstance().addCallbackParam("sucess", false);
 		}
-
-		return listar();
+		
+		return "";
 	}
 	
 	public String listar() {
@@ -121,8 +125,8 @@ public class AssinanteBBean {
 			cidade = ass.getCidade();
 			bairro = ass.getBairro();
 			telefone = ass.getTelefone();
-			valorMensal = ass.getValormensal() == null ? null :ass.getValormensal().toString()  ;
-			valorAnual = ass.getValoranual() == null ? null :ass.getValoranual().toString()  ;
+			valorMensal = DecimalConverter.format(ass.getValormensal())  ;
+			valorAnual = DecimalConverter.format(ass.getValoranual()) ;
 			dataCadastro = ass.getDatacadastro();
 			dataValidade = ass.getDatavencimento();
 			codEntregador = ass.getEntregador().getCodentregador();
