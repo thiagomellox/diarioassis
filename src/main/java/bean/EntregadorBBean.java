@@ -72,6 +72,10 @@ public class EntregadorBBean {
 		return "listarEntregador";
 	}
 	
+	public String cancelar() {
+		return "listarEntregador";
+	}
+	
 	private void resetInclusao(){
 		nome = null;
 		endereco = null;

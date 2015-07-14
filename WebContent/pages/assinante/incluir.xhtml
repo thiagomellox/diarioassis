@@ -92,15 +92,12 @@
 						styleClass="ui-priority-primary" icon="ui-icon-circle-check" />
 
 					<p:commandButton value="Cancelar" id="cancelarBnt" ignoreAutoUpdate="true" immediate="true" 
-						style="float: right;" action="#{assinanteBBean.listar}"
+						style="float: right;" action="#{assinanteBBean.cancelar}"
 						styleClass="ui-priority-primary" icon="ui-icon-close" />
 				</h:panelGrid>
 				
-				<p:dialog header="Modal Dialog" widgetVar="dlg2" modal="true" height="80" showHeader="false" >
-				    <div class="titulo" style="margin-bottom: 10px;">
-				    	<h:outputText value="Registro salvo com sucesso!" />
-				    </div>
-				    <div >
+				<p:dialog header="Registro salvo com sucesso!" widgetVar="dlg2" modal="true" height="60" closable="false" >
+				    <div style=" margin-top: 10px;" >
 					    <p:commandButton value="Ok" id="salvoModal" ignoreAutoUpdate="true" immediate="true" 
 							style="float: right;" action="#{assinanteBBean.listar}"
 							styleClass="ui-priority-primary" icon="ui-icon-close" />

@@ -66,6 +66,8 @@ public class AssinanteBBean {
 			ass.setBairro(bairro);
 			ass.setEndereco(endereco);
 			ass.setTelefone(telefone);
+			ass.setValormensal(DecimalConverter.parse(valorMensal) );
+			ass.setValoranual(DecimalConverter.parse(valorAnual) );
 			ass.setDatacadastro(dataCadastro);
 			ass.setDatavencimento(dataValidade);
 			Entregador e = new Entregador();
@@ -93,6 +95,11 @@ public class AssinanteBBean {
 		return "listarAssinante";
 	}
 	
+
+	public String cancelar() {
+		return "listarAssinante";
+	}
+	
 	private void resetInclusao(){
 		nome = null;
 		endereco = null;
@@ -115,29 +122,64 @@ public class AssinanteBBean {
 	}
 	
 	public String abrirAlterar() {
-		if(FacesUtils.getRequestParameter("codAssinante") != null)
-			codAssinante = Integer.valueOf(FacesUtils.getRequestParameter("codAssinante"));
-		try{
-			Assinante ass = assinanteDAO.findById(codAssinante);
+		if(codAssinante != null){
+			try{
+				Assinante ass = assinanteDAO.findById(codAssinante);
+				
+				nome = ass.getNome();
+				endereco = ass.getEndereco();
+				cidade = ass.getCidade();
+				bairro = ass.getBairro();
+				telefone = ass.getTelefone();
+				valorMensal = DecimalConverter.format(ass.getValormensal())  ;
+				valorAnual = DecimalConverter.format(ass.getValoranual()) ;
+				dataCadastro = ass.getDatacadastro();
+				dataValidade = ass.getDatavencimento();
+				codEntregador = ass.getEntregador().getCodentregador();
+				
+				alterando = true;
+			}catch(Exception e){
+				FacesUtils.addErrorMessage("Falha ao executar a ação");
+				return "";
+			}
 			
-			nome = ass.getNome();
-			endereco = ass.getEndereco();
-			cidade = ass.getCidade();
-			bairro = ass.getBairro();
-			telefone = ass.getTelefone();
-			valorMensal = DecimalConverter.format(ass.getValormensal())  ;
-			valorAnual = DecimalConverter.format(ass.getValoranual()) ;
-			dataCadastro = ass.getDatacadastro();
-			dataValidade = ass.getDatavencimento();
-			codEntregador = ass.getEntregador().getCodentregador();
-			
-			alterando = true;
-		}catch(Exception e){
+			return "incluirAssinante";
+		}else{
 			FacesUtils.addErrorMessage("Falha ao executar a ação");
 			return "";
 		}
 		
-		return "incluirAssinante";
+	}
+	
+	
+	public String abrirExcluir() {
+		if(codAssinante != null){
+			try{
+				Assinante ass = assinanteDAO.findById(codAssinante);
+				
+				nome = ass.getNome();
+				endereco = ass.getEndereco();
+				cidade = ass.getCidade();
+				bairro = ass.getBairro();
+				telefone = ass.getTelefone();
+				valorMensal = DecimalConverter.format(ass.getValormensal())  ;
+				valorAnual = DecimalConverter.format(ass.getValoranual()) ;
+				dataCadastro = ass.getDatacadastro();
+				dataValidade = ass.getDatavencimento();
+				codEntregador = ass.getEntregador().getCodentregador();
+				
+				RequestContext.getCurrentInstance().addCallbackParam("sucess", true);
+			}catch(Exception e){
+				RequestContext.getCurrentInstance().addCallbackParam("sucess", false);
+				FacesUtils.addErrorMessage("Falha ao executar a ação");
+			}
+		}else{
+			FacesUtils.addErrorMessage("Falha ao executar a ação");
+			
+		}
+		
+		return "";
+		
 	}
 	
 	public final void pesquisar() {

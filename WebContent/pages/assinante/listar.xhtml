@@ -43,7 +43,7 @@
 		        <fieldset style="padding: 5px; border: 0px;">
 					<h:panelGroup >
 						<p:dataTable var="item" id="listaGrid" value="#{assinanteBBean.listaGrid}"
-						
+						rendered="#{not empty assinanteBBean.listaGrid}"
 						rows="10"
 						paginatorPosition="bottom"  
 						paginator="true"
@@ -51,7 +51,7 @@
 							<f:facet name="{Exporters}">
 					            <h:commandLink>
 					                <p:graphicImage url="/images/xls-icon24.png" width="24"/>
-					                <p:dataExporter type="xls" target="listaGrid" fileName="assinante" />
+					                <p:dataExporter type="xls" target="listaGrid" fileName="assinante"  />
 					            </h:commandLink>
 					 
 					            <h:commandLink>
@@ -81,15 +81,40 @@
 								<h:outputText value="#{item.entregador.nome}" />
 							</p:column>
 							
+							<p:column headerText="Valor Mensal" visible="false"  >
+								<h:outputText value="#{item.valormensal}"  >
+									<f:convertNumber minFractionDigits="2"  />
+								</h:outputText>
+							</p:column>
+							
+							<p:column headerText="Valor Anual" visible="false"  >
+								<h:outputText value="#{item.valoranual}" >
+									<f:convertNumber minFractionDigits="2"  />
+								</h:outputText>
+							</p:column>
+							
+							<p:column headerText="Data Cadastro" visible="false" exportable="true" >
+								<h:outputText value="#{item.datacadastro}" >
+									<f:convertDateTime pattern="dd/MM/yyyy"/>
+								</h:outputText>
+							</p:column>
+							
+							<p:column headerText="Data Vencimento" visible="false" exportable="true" >
+								<h:outputText value="#{item.datavencimento}" >
+									<f:convertDateTime pattern="dd/MM/yyyy"/>
+								</h:outputText>
+							</p:column>
+							
 							<p:column  exportable="false" width="80">
 								<p:commandLink title="Alterar" id="alterarLnk" action="#{assinanteBBean.abrirAlterar}">
 									<p:graphicImage url="/images/file_edit.png" width="30"/>
 									<f:setPropertyActionListener value="#{item.codassinante}" target="#{assinanteBBean.codAssinante}" />
 								</p:commandLink> &nbsp;&nbsp;
 								
-								<p:commandLink title="Excluir" id="excluirLnk" action="#{assinanteBBean.abrirAlterar}" >
+								<p:commandLink title="Excluir" id="excluirLnk" oncomplete="if (args.sucess){PF('modalE').show();}" 
+									action="#{assinanteBBean.abrirExcluir}" update=":incluirassinante" >
 									<p:graphicImage url="/images/file_delete.png" width="30"/>
-									<f:setPropertyActionListener value="#{item.codassinante}" target="#{assinanteBBean.codAssinante}" />
+									<f:setPropertyActionListener value="#{item.codassinante}" target="#{assinanteBBean.codAssinante}"/>
 								</p:commandLink>
 
 							</p:column>
@@ -98,6 +123,20 @@
 					</h:panelGroup>
 					
 				</fieldset>
+				<p:dialog  header="Tem certeza que deseja excluir o registro:" widgetVar="modalE" modal="true" height="90" closable="false"  >
+				    <div style="margin-bottom: 20px; margin-top: 10px; text-align: center; font-weight: bold;">
+				    	<h:outputLabel value="#{assinanteBBean.nome}" />
+				    </div>
+				    <div >
+				    	<p:commandButton value="Cancelar" id="cancelarModal" ignoreAutoUpdate="true" immediate="true" 
+							onclick="PF('modalE').hide();"
+							styleClass="ui-priority-primary" icon="ui-icon-close"/>
+							
+					    <p:commandButton value="Excluir" id="excluirModal" ignoreAutoUpdate="true" immediate="true" 
+							style="float: right;" action="#{assinanteBBean.listar}"
+							styleClass="ui-priority-primary" icon="ui-icon-circle-check" />
+					</div>
+				</p:dialog> 
 			</h:form>
 		</ui:define>
    	</ui:composition>
