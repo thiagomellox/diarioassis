@@ -43,7 +43,7 @@
 		        <fieldset style="padding: 5px; border: 0px;">
 					<h:panelGroup >
 						<p:dataTable var="item" id="listaGrid" value="#{cortesiaBBean.listaGrid}"
-						
+						rendered="#{not empty cortesiaBBean.listaGrid}"
 						rows="10"
 						paginatorPosition="bottom"  
 						paginator="true"
@@ -78,8 +78,24 @@
 								<h:outputText value="#{item.cidade}" />
 							</p:column>
 							
+							<p:column headerText="Telefone">
+								<h:outputText value="#{item.telefone}" />
+							</p:column>
+							
 							<p:column headerText="Entregador">
 								<h:outputText value="#{item.entregador.nome}" />
+							</p:column>
+							
+							<p:column headerText="Data Cadastro" visible="false" exportable="true" >
+								<h:outputText value="#{item.datacadastro}" >
+									<f:convertDateTime pattern="dd/MM/yyyy"/>
+								</h:outputText>
+							</p:column>
+							
+							<p:column headerText="Data Vencimento" visible="false" exportable="true" >
+								<h:outputText value="#{item.datavencimento}" >
+									<f:convertDateTime pattern="dd/MM/yyyy"/>
+								</h:outputText>
 							</p:column>
 							
 							<p:column  exportable="false" width="80">
@@ -88,9 +104,10 @@
 									<f:setPropertyActionListener value="#{item.codCortesia}" target="#{cortesiaBBean.codCortesia}" />
 								</p:commandLink> &nbsp;&nbsp;
 								
-								<p:commandLink title="Excluir" id="excluirLnk" action="#{cortesiaBBean.abrirAlterar}"  >
+								<p:commandLink title="Excluir" id="excluirLnk" oncomplete="if (args.sucess){PF('modalE').show();}" 
+									action="#{cortesiaBBean.abrirExcluir}" update=":listarCortesia" >
 									<p:graphicImage url="/images/file_delete.png" width="30"/>
-									<f:setPropertyActionListener value="#{item.codCortesia}" target="#{cortesiaBBean.codCortesia}" />
+									<f:setPropertyActionListener value="#{item.codCortesia}" target="#{cortesiaBBean.codCortesia}"/>
 								</p:commandLink>
 
 							</p:column>
@@ -99,6 +116,20 @@
 					</h:panelGroup>
 					
 				</fieldset>
+				<p:dialog  header="Tem certeza que deseja excluir o registro:" widgetVar="modalE" modal="true" height="90" closable="false"  >
+				    <div style="margin-bottom: 20px; margin-top: 10px; text-align: center; font-weight: bold;">
+				    	<h:outputLabel value="#{cortesiaBBean.nome}" />
+				    </div>
+				    <div >
+				    	<p:commandButton value="Cancelar" id="cancelarModal" ignoreAutoUpdate="true" immediate="true" 
+							onclick="PF('modalE').hide();"
+							styleClass="ui-priority-primary" icon="ui-icon-close"/>
+							
+					    <p:commandButton value="Excluir" id="excluirModal" ignoreAutoUpdate="true" immediate="true" 
+							style="float: right;" action="#{cortesiaBBean.listar}"
+							styleClass="ui-priority-primary" icon="ui-icon-circle-check" />
+					</div>
+				</p:dialog> 
 			</h:form>
 		</ui:define>
    	</ui:composition>

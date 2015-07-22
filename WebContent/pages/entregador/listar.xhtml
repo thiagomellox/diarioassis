@@ -39,7 +39,7 @@
 		        <fieldset style="padding: 5px; border: 0px;">
 					<h:panelGroup >
 						<p:dataTable var="item" id="listaGrid" value="#{entregadorBBean.listaGrid}"
-						
+						rendered="#{not empty entregadorBBean.listaGrid}"
 						rows="10"
 						paginatorPosition="bottom"  
 						paginator="true"
@@ -83,9 +83,10 @@
 									<f:setPropertyActionListener value="#{item.codentregador}" target="#{entregadorBBean.codentregador}" />
 								</p:commandLink> &nbsp;&nbsp;
 								
-								<p:commandLink title="Excluir" id="excluirLnk" action="#{entregadorBBean.abrirAlterar}" icon="ui-icon-circle-check" >
+								<p:commandLink title="Excluir" id="excluirLnk" oncomplete="if (args.sucess){PF('modalE').show();}" 
+									action="#{entregadorBBean.abrirExcluir}" update=":incluirentregador" >
 									<p:graphicImage url="/images/file_delete.png" width="30"/>
-									<f:setPropertyActionListener value="#{item.codentregador}" target="#{entregadorBBean.codentregador}" />
+									<f:setPropertyActionListener value="#{item.codentregador}" target="#{entregadorBBean.codentregador}"/>
 								</p:commandLink>
 
 							</p:column>
@@ -94,6 +95,20 @@
 					</h:panelGroup>
 					
 				</fieldset>
+				<p:dialog  header="Tem certeza que deseja excluir o registro:" widgetVar="modalE" modal="true" height="90" closable="false"  >
+				    <div style="margin-bottom: 20px; margin-top: 10px; text-align: center; font-weight: bold;">
+				    	<h:outputLabel value="#{entregadorBBean.nome}" />
+				    </div>
+				    <div >
+				    	<p:commandButton value="Cancelar" id="cancelarModal" ignoreAutoUpdate="true" immediate="true" 
+							onclick="PF('modalE').hide();"
+							styleClass="ui-priority-primary" icon="ui-icon-close"/>
+							
+					    <p:commandButton value="Excluir" id="excluirModal" ignoreAutoUpdate="true" immediate="true" 
+							style="float: right;" action="#{entregadorBBean.listar}"
+							styleClass="ui-priority-primary" icon="ui-icon-circle-check" />
+					</div>
+				</p:dialog>
 			</h:form>
 		</ui:define>
    	</ui:composition>

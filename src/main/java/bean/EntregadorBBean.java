@@ -113,6 +113,25 @@ public class EntregadorBBean {
 		return "incluirEntregador";
 	}
 	
+	public void abrirExcluir() {
+		try{
+			Entregador ass = entregadorDAO.findById(codentregador);
+			
+			nome = ass.getNome();
+			endereco = ass.getEndereco();
+			cidade = ass.getCidade();
+			bairro = ass.getBairro();
+			telefone = ass.getTelefone();
+			cpf = ass.getCpf();
+			
+			RequestContext.getCurrentInstance().addCallbackParam("sucess", true);
+		}catch(Exception e){
+			RequestContext.getCurrentInstance().addCallbackParam("sucess", false);
+			FacesUtils.addErrorMessage("Falha ao executar a ação");
+		}
+		
+	}
+	
 	public final void pesquisar() {
 		try{
 			listaGrid = new ArrayList<EntregadorDTO>();

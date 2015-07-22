@@ -111,7 +111,7 @@ public class CortesiaBBean {
 	}
 	
 	public String abrirAlterar() {
-		if(FacesUtils.getRequestParameter("codAssinante") != null)
+		if(FacesUtils.getRequestParameter("codCortesia") != null)
 			codCortesia = Integer.valueOf(FacesUtils.getRequestParameter("codCortesia"));
 		try{
 			Cortesia ass = cortesiaDAO.findById(codCortesia);
@@ -132,6 +132,29 @@ public class CortesiaBBean {
 		}
 		
 		return "incluirCortesia";
+	}
+	
+	public void abrirExcluir() {
+		if(FacesUtils.getRequestParameter("codCortesia") != null)
+			codCortesia = Integer.valueOf(FacesUtils.getRequestParameter("codCortesia"));
+		try{
+			Cortesia ass = cortesiaDAO.findById(codCortesia);
+			
+			nome = ass.getNome();
+			endereco = ass.getEndereco();
+			cidade = ass.getCidade();
+			bairro = ass.getBairro();
+			telefone = ass.getTelefone();
+			dataCadastro = ass.getDatacadastro();
+			dataValidade = ass.getDatavencimento();
+			codEntregador = ass.getEntregador().getCodentregador();
+			
+			RequestContext.getCurrentInstance().addCallbackParam("sucess", true);
+		}catch(Exception e){
+			RequestContext.getCurrentInstance().addCallbackParam("sucess", false);
+			FacesUtils.addErrorMessage("Falha ao executar a ação");
+		}
+		
 	}
 	
 	public final void pesquisar() {
