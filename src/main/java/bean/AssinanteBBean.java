@@ -12,11 +12,14 @@ import org.primefaces.context.RequestContext;
 
 import util.DecimalConverter;
 import util.FacesUtils;
+import util.MD5Utils;
 import dao.AssinanteDAO;
 import dao.EntregadorDAO;
+import dao.UsuarioDAO;
 import dto.AssinanteDTO;
 import entity.Assinante;
 import entity.Entregador;
+import entity.Usuario;
 
 @ManagedBean
 @SessionScoped
@@ -43,6 +46,7 @@ public class AssinanteBBean {
 	
 	private AssinanteDAO assinanteDAO = new AssinanteDAO();
 	private EntregadorDAO entregadorDAO = new EntregadorDAO();
+	private UsuarioDAO usu = new UsuarioDAO();
 	
 	public AssinanteBBean() {
 		if(entregadorSelectItem == null){
@@ -80,10 +84,10 @@ public class AssinanteBBean {
 			}
 			
 			FacesUtils.addInfoMessage("Salvo com sucesso!");
-			RequestContext.getCurrentInstance().addCallbackParam("sucess", true);
+			FacesUtils.sucesso();
 		} catch (Exception e) {
 			FacesUtils.addErrorMessage("Houve um problema ao tentar salvar. " + e.getMessage());
-			RequestContext.getCurrentInstance().addCallbackParam("sucess", false);
+			FacesUtils.erro();
 		}
 		
 		return "";
@@ -184,6 +188,13 @@ public class AssinanteBBean {
 	
 	public final void pesquisar() {
 		listaGrid = new ArrayList<AssinanteDTO>();
+		
+//		Usuario usuario = new Usuario();
+//		usuario.setDataCadastro(new Date());
+//		usuario.setNome("thiago");
+//		usuario.setEmail("thiagomelox@hotmail.com");
+//		usuario.setSenha(MD5Utils.convertStringToMd5("teste"));;
+//		usu.save(usuario);
 		
 		String entregadorB = "";
 		if(codEntregadorPesquisa != null && codEntregadorPesquisa.intValue() != 0){

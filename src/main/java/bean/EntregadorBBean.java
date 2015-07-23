@@ -55,11 +55,11 @@ public class EntregadorBBean {
 			}
 			
 			FacesUtils.addInfoMessage("Salvo com sucesso!");
-			RequestContext.getCurrentInstance().addCallbackParam("sucess", true);
+			FacesUtils.sucesso();
 			return "";
 		} catch (Exception e) {
 			FacesUtils.addErrorMessage("Houve um problema ao tentar salvar. " + e.getMessage());
-			RequestContext.getCurrentInstance().addCallbackParam("sucess", false);
+			FacesUtils.erro();
 			return "";
 		}
 
@@ -124,10 +124,10 @@ public class EntregadorBBean {
 			telefone = ass.getTelefone();
 			cpf = ass.getCpf();
 			
-			RequestContext.getCurrentInstance().addCallbackParam("sucess", true);
+			FacesUtils.sucesso();
 		}catch(Exception e){
 			RequestContext.getCurrentInstance().addCallbackParam("sucess", false);
-			FacesUtils.addErrorMessage("Falha ao executar a ação");
+			FacesUtils.erro();
 		}
 		
 	}

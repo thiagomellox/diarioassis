@@ -76,10 +76,10 @@ public class CortesiaBBean {
 			}
 			
 			FacesUtils.addInfoMessage("Salvo com sucesso!");
-			RequestContext.getCurrentInstance().addCallbackParam("sucess", true);
+			FacesUtils.sucesso();
 		} catch (Exception e) {
 			FacesUtils.addErrorMessage("Houve um problema ao tentar salvar. " + e.getMessage());
-			RequestContext.getCurrentInstance().addCallbackParam("sucess", false);
+			FacesUtils.erro();
 		}
 		
 		return "";
@@ -149,9 +149,9 @@ public class CortesiaBBean {
 			dataValidade = ass.getDatavencimento();
 			codEntregador = ass.getEntregador().getCodentregador();
 			
-			RequestContext.getCurrentInstance().addCallbackParam("sucess", true);
+			FacesUtils.sucesso();
 		}catch(Exception e){
-			RequestContext.getCurrentInstance().addCallbackParam("sucess", false);
+			FacesUtils.erro();
 			FacesUtils.addErrorMessage("Falha ao executar a ação");
 		}
 		

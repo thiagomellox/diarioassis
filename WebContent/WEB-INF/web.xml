@@ -31,13 +31,24 @@
             /WEB-INF/faces-config.xml, /WEB-INF/faces-navigation.xml
         </param-value>
 	</context-param>
-	
-	<!--
-         The welcome-file-list contains an ordered list of welcome
-         files elements.
-     -->
-    <welcome-file-list>
-        <welcome-file>index.xhtml</welcome-file>
-    </welcome-file-list>
+
+	<!-- login filter -->
+	<filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>security.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<session-config>
+		<session-timeout>5</session-timeout>
+	</session-config>
+
+	<!-- The welcome-file-list contains an ordered list of welcome files elements. -->
+	<welcome-file-list>
+		<welcome-file>login.xhtml</welcome-file>
+	</welcome-file-list>
 
 </web-app>

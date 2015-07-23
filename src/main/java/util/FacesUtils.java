@@ -29,6 +29,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.primefaces.context.RequestContext;
+
 
 /**
  * The Class FacesUtils.
@@ -426,6 +428,14 @@ public final class FacesUtils {
 
             return;
         }
+    }
+    
+    public static void sucesso(){
+    	RequestContext.getCurrentInstance().addCallbackParam("sucess", true);
+    }
+    
+    public static void erro(){
+    	RequestContext.getCurrentInstance().addCallbackParam("sucess", false);
     }
 
 
