@@ -36,13 +36,15 @@ public class LogonBbean {
     public String doLogin() {
        try {
            logger.info("Tentando logar com usuário " + login);
+           System.out.println("etntando logar");
            Usuario usuario = usuarioDAO.isUsuarioValido(login, senha);
- 
+           
            if (usuario == null) {
+        	   System.out.println("nao achou");
              FacesUtils.addErrorMessage("Login ou Senha errado, tente novamente !");
              return "";
            }
- 
+           System.out.println("achou usuarior");
            
            logger.info("Login efetuado com sucesso");
            FacesUtils.addInfoMessage("Login efetuado com sucesso!");
@@ -50,6 +52,7 @@ public class LogonBbean {
            FacesUtils.sucesso();
            return "index";
        } catch (Exception e) {
+    	   System.out.println("erro: " + e.getMessage());
     	   FacesUtils.erro();
     	   FacesUtils.addErrorMessage("Erro ao tentar logar: " + e.getMessage());
            return "";

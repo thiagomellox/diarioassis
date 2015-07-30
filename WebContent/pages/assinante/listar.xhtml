@@ -11,6 +11,10 @@
 <h:body>
 	
 	<ui:composition template="/layout.xhtml">
+	
+		<f:metadata> 
+			<f:viewAction action="#{assinanteBBean.init}"/> 
+		</f:metadata> 
  		<ui:define name="content"> 
  			<h:form id="incluirassinante">
  				<div class="titulo">

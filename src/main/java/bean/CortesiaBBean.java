@@ -42,13 +42,11 @@ public class CortesiaBBean {
 	private CortesiaDAO cortesiaDAO = new CortesiaDAO();
 	private EntregadorDAO entregadorDAO = new EntregadorDAO();
 	
-	public CortesiaBBean() {
-		if(entregadorSelectItem == null){
-			entregadorSelectItem = new ArrayList<SelectItem>();
-			entregadorSelectItem.add(new SelectItem(0, "Selecione uma opção"));
-			for(Entregador entregador : entregadorDAO.listAll()){
-				entregadorSelectItem.add(new SelectItem(entregador.getCodentregador(), entregador.getNome()));
-			}
+	public void init() {
+		entregadorSelectItem = new ArrayList<SelectItem>();
+		entregadorSelectItem.add(new SelectItem(0, "Selecione uma opção"));
+		for(Entregador entregador : entregadorDAO.listAll()){
+			entregadorSelectItem.add(new SelectItem(entregador.getCodentregador(), entregador.getNome()));
 		}
 		
 	}

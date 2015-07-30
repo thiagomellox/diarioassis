@@ -48,15 +48,15 @@ public class AssinanteBBean {
 	private EntregadorDAO entregadorDAO = new EntregadorDAO();
 	private UsuarioDAO usu = new UsuarioDAO();
 	
-	public AssinanteBBean() {
-		if(entregadorSelectItem == null){
-			entregadorSelectItem = new ArrayList<SelectItem>();
-			entregadorSelectItem.add(new SelectItem(0, "Selecione uma opção"));
-			for(Entregador entregador : entregadorDAO.listAll()){
-				entregadorSelectItem.add(new SelectItem(entregador.getCodentregador(), entregador.getNome()));
-			}
+
+	public void init() {
+		entregadorSelectItem = new ArrayList<SelectItem>();
+		entregadorSelectItem.add(new SelectItem(0, "Selecione uma opção"));
+		for(Entregador entregador : entregadorDAO.listAll()){
+			entregadorSelectItem.add(new SelectItem(entregador.getCodentregador(), entregador.getNome()));
 		}
 		
+	
 	}
 
 	public String salvar() {

@@ -11,6 +11,9 @@
 <h:body>
 	
 	<ui:composition template="/layout.xhtml">
+		<f:metadata> 
+			<f:viewAction action="#{cortesiaBBean.init}"/> 
+		</f:metadata> 
  		<ui:define name="content"> 
  			<h:form id="listarCortesia">
  				<div class="titulo">
