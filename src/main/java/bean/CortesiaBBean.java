@@ -39,16 +39,19 @@ public class CortesiaBBean {
 	private Integer codEntregadorPesquisa;
 	private boolean alterando;
 	
+	private Integer qtdeRegistros;
+	
 	private CortesiaDAO cortesiaDAO = new CortesiaDAO();
 	private EntregadorDAO entregadorDAO = new EntregadorDAO();
 	
 	public void init() {
 		entregadorSelectItem = new ArrayList<SelectItem>();
-		entregadorSelectItem.add(new SelectItem(0, "Selecione uma opção"));
+		entregadorSelectItem.add(new SelectItem(null, "Selecione uma opção"));
 		for(Entregador entregador : entregadorDAO.listAll()){
 			entregadorSelectItem.add(new SelectItem(entregador.getCodentregador(), entregador.getNome()));
 		}
 		
+		qtdeRegistros = cortesiaDAO.findQtdeRegistros();
 	}
 
 	public String salvar() {
@@ -278,6 +281,14 @@ public class CortesiaBBean {
 
 	public void setCodEntregadorPesquisa(Integer codEntregadorPesquisa) {
 		this.codEntregadorPesquisa = codEntregadorPesquisa;
+	}
+
+	public Integer getQtdeRegistros() {
+		return qtdeRegistros;
+	}
+
+	public void setQtdeRegistros(Integer qtdeRegistros) {
+		this.qtdeRegistros = qtdeRegistros;
 	}
 	
 

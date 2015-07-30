@@ -36,6 +36,8 @@ public class AssinanteBBean {
 	private Date dataCadastro;
 	private Date dataValidade;
 	private Integer codEntregador;
+	
+	private Integer qtdeAssinantes;
 
 	private List<AssinanteDTO> listaGrid;
 	private List<SelectItem> entregadorSelectItem;
@@ -51,12 +53,12 @@ public class AssinanteBBean {
 
 	public void init() {
 		entregadorSelectItem = new ArrayList<SelectItem>();
-		entregadorSelectItem.add(new SelectItem(0, "Selecione uma opção"));
+		entregadorSelectItem.add(new SelectItem(null, "Selecione uma opção"));
 		for(Entregador entregador : entregadorDAO.listAll()){
 			entregadorSelectItem.add(new SelectItem(entregador.getCodentregador(), entregador.getNome()));
 		}
 		
-	
+		qtdeAssinantes = assinanteDAO.findQtdeRegistros();
 	}
 
 	public String salvar() {
@@ -203,6 +205,15 @@ public class AssinanteBBean {
 		listaGrid = AssinanteDTO.entityToDtoList(assinanteDAO.findByName(nomePesquisa,entregadorB));
 		
 	}
+	
+	public List<SelectItem> getMeses(){
+		List<SelectItem> lista = new ArrayList<SelectItem>();
+		for(int i = 1; i<=30; i++){
+			lista.add(new SelectItem(i,String.valueOf(i)));
+		}
+		
+		return lista;
+	}
 
 	public Integer getCodAssinante() {
 		return codAssinante;
@@ -330,6 +341,14 @@ public class AssinanteBBean {
 
 	public void setCodEntregadorPesquisa(Integer codEntregadorPesquisa) {
 		this.codEntregadorPesquisa = codEntregadorPesquisa;
+	}
+
+	public Integer getQtdeAssinantes() {
+		return qtdeAssinantes;
+	}
+
+	public void setQtdeAssinantes(Integer qtdeAssinantes) {
+		this.qtdeAssinantes = qtdeAssinantes;
 	}
 	
 

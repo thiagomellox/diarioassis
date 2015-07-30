@@ -22,19 +22,25 @@
  				<p:messages id="messages" autoUpdate="true" closable="true" />
 		        <fieldset style="padding: 5px; border: 0px;">
 		        	<h:panelGroup >
-				        <h:panelGrid columns="3" cellpadding="5">
-				            <p:outputLabel for="nome" value="Nome:" />
-				            <p:inputText id="nome" value="#{cortesiaBBean.nomePesquisa}"  label="nome" />
-				            
-					        <p:commandButton value="Pesquisar" id="pesquisar" icon="ui-icon-circle-zoomout"
-					        actionListener="#{cortesiaBBean.pesquisar}" styleClass="ui-priority-primary" 
-					        update=":listarCortesia" >
-					        </p:commandButton>
+				        <h:panelGrid columns="2" cellpadding="5" width="100%">
+					        <h:panelGrid columns="3" cellpadding="5">
+					            <p:outputLabel for="nome" value="Nome:" />
+					            <p:inputText id="nome" value="#{cortesiaBBean.nomePesquisa}"  label="nome" />
+					            
+						        <p:commandButton value="Pesquisar" id="pesquisar" icon="ui-icon-circle-zoomout"
+						        actionListener="#{cortesiaBBean.pesquisar}" styleClass="ui-priority-primary" 
+						        update=":listarCortesia" >
+						        </p:commandButton>
+						        
+						        <p:outputLabel for="entregador" value="Entregador:" />
+						        <p:selectOneMenu id="entregador" value="#{cortesiaBBean.codEntregadorPesquisa}">
+						            <f:selectItems value="#{cortesiaBBean.entregadorSelectItem}" />
+						        </p:selectOneMenu>
+					        </h:panelGrid>
 					        
-					        <p:outputLabel for="entregador" value="Entregador:" />
-					        <p:selectOneMenu id="entregador" value="#{cortesiaBBean.codEntregadorPesquisa}">
-					            <f:selectItems value="#{cortesiaBBean.entregadorSelectItem}" />
-					        </p:selectOneMenu>
+					        <p:fieldset  legend="Cortesias" styleClass="fild" style="float: right;">
+					        	<p:outputLabel  value="#{cortesiaBBean.qtdeRegistros}" />
+					        </p:fieldset>
 				        </h:panelGrid>
 
 						<p:commandButton value="Incluir Novo" id="incluirBnt" icon="ui-icon-circle-plus"

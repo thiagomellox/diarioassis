@@ -44,6 +44,13 @@ public class AssinanteDAO extends DAO {
 		Query queryr = em.createQuery(query.toString());
 		return queryr.getResultList();
 	}
+	
+	public Integer findQtdeRegistros() {
+		StringBuilder query = new StringBuilder();
+		query.append(" SELECT p FROM Assinante p");
+		Query queryr = em.createQuery(query.toString());
+		return queryr.getResultList().size();
+	}
 
 	public Assinante findById(Integer codassinante) {
 		StringBuilder sb = new StringBuilder();

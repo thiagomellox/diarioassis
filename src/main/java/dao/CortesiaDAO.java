@@ -42,6 +42,13 @@ public class CortesiaDAO extends DAO {
 		return queryr.getResultList();
 	}
 	
+	public Integer findQtdeRegistros() {
+		StringBuilder query = new StringBuilder();
+		query.append(" SELECT p FROM Cortesia p");
+		Query queryr = em.createQuery(query.toString());
+		return queryr.getResultList().size();
+	}
+	
 	public Cortesia findById(Integer codCortesia) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(" SELECT p FROM Cortesia p");

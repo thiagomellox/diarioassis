@@ -23,7 +23,8 @@
  				<p:messages id="messages" autoUpdate="true" closable="true" />
 		        <fieldset style="padding: 5px; border: 0px;">
 		        	<h:panelGroup >
-				        <h:panelGrid columns="3" cellpadding="5">
+				        <h:panelGrid columns="2" cellpadding="5" width="100%">
+				        <h:panelGrid columns="3" cellpadding="5" >
 				            <p:outputLabel for="nome" value="Nome:" />
 				            <p:inputText id="nome" value="#{assinanteBBean.nomePesquisa}"  label="nome" />
 				            
@@ -36,6 +37,11 @@
 					        <p:selectOneMenu id="entregador" value="#{assinanteBBean.codEntregadorPesquisa}">
 					            <f:selectItems value="#{assinanteBBean.entregadorSelectItem}" />
 					        </p:selectOneMenu>
+					        
+				        </h:panelGrid>
+				        <p:fieldset  legend="Assinantes" styleClass="fild" style="float: right;">
+				        	<p:outputLabel  value="#{assinanteBBean.qtdeAssinantes}" />
+				        </p:fieldset>
 				        </h:panelGrid>
 
 						<p:commandButton value="Incluir Novo" id="incluirBnt" icon="ui-icon-circle-plus"

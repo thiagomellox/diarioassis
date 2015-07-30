@@ -75,11 +75,14 @@
 			       <p:message for="dataCadastro" />
 			       
 			       <p:outputLabel  for="dataVencimento" value="Data Vencimento:" />
-			       <p:calendar id="dataVencimento" pattern="dd/MM/yyyy" value="#{assinanteBBean.dataValidade}" required="true"  />
+<!-- 			       <p:calendar id="dataVencimento" pattern="dd/MM/yyyy" value="#{assinanteBBean.dataValidade}" required="true"  /> -->
+			       <p:selectOneMenu id="dataVencimento" value="#{assinanteBBean.codEntregador}" required="true"  >
+			            <f:selectItems value="#{assinanteBBean.meses}" />
+			        </p:selectOneMenu>
 			       <p:message for="dataVencimento" />
 			       
 			       <p:outputLabel  for="entregador" value="Entregador:" />
-			        <p:selectOneMenu id="entregador" value="#{assinanteBBean.codEntregador}" required="true" >
+			        <p:selectOneMenu id="entregador" value="#{assinanteBBean.codEntregador}" required="true"  >
 			            <f:selectItems value="#{assinanteBBean.entregadorSelectItem}" />
 			        </p:selectOneMenu>
 			        <p:message for="entregador" />
