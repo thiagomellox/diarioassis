@@ -106,7 +106,7 @@ public class Entregador
     this.cidade = cidade;
   }
   
-  @OneToMany(cascade={javax.persistence.CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="entregador")
+  @OneToMany(fetch=FetchType.LAZY, mappedBy="entregador")
   public Set<Assinante> getAssinantes()
   {
     return this.assinantes;
@@ -117,7 +117,7 @@ public class Entregador
     this.assinantes = assinantes;
   }
   
-  @OneToMany(cascade={javax.persistence.CascadeType.ALL}, fetch=FetchType.LAZY, mappedBy="entregador")
+  @OneToMany( fetch=FetchType.LAZY, mappedBy="entregador")
   public Set<Cortesia> getCortesias()
   {
     return this.cortesias;

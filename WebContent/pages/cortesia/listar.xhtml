@@ -135,8 +135,8 @@
 							styleClass="ui-priority-primary" icon="ui-icon-close"/>
 							
 					    <p:commandButton value="Excluir" id="excluirModal" ignoreAutoUpdate="true" immediate="true" 
-							style="float: right;" action="#{cortesiaBBean.listar}"
-							styleClass="ui-priority-primary" icon="ui-icon-circle-check" />
+							style="float: right;" action="#{cortesiaBBean.excluir}" oncomplete="PF('modalE').hide();"
+							styleClass="ui-priority-primary" icon="ui-icon-circle-check" update=":listarCortesia" />
 					</div>
 				</p:dialog> 
 			</h:form>

@@ -8,11 +8,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
-import org.primefaces.context.RequestContext;
-
 import util.FacesUtils;
 import dao.CortesiaDAO;
 import dao.EntregadorDAO;
+import dao.impl.CortesiaDAOImpl;
+import dao.impl.EntregadorDAOImpl;
 import dto.CortesiaDTO;
 import entity.Assinante;
 import entity.Cortesia;
@@ -41,8 +41,8 @@ public class CortesiaBBean {
 	
 	private Integer qtdeRegistros;
 	
-	private CortesiaDAO cortesiaDAO = new CortesiaDAO();
-	private EntregadorDAO entregadorDAO = new EntregadorDAO();
+	private CortesiaDAO cortesiaDAO = new CortesiaDAOImpl();
+	private EntregadorDAO entregadorDAO = new EntregadorDAOImpl();
 	
 	public void init() {
 		entregadorSelectItem = new ArrayList<SelectItem>();
@@ -154,6 +154,27 @@ public class CortesiaBBean {
 		}catch(Exception e){
 			FacesUtils.erro();
 			FacesUtils.addErrorMessage("Falha ao executar a ação");
+		}
+		
+	}
+	
+	public void excluir() {
+		if(codCortesia != null){
+			try{
+				Cortesia ass = cortesiaDAO.findById(codCortesia);
+				cortesiaDAO.delete(ass);
+
+				FacesUtils.sucesso();
+				FacesUtils.addInfoMessage("Registro excluído com sucesso!");
+				pesquisar();
+				qtdeRegistros = cortesiaDAO.findQtdeRegistros();
+			}catch(Exception e){
+				FacesUtils.erro();
+				FacesUtils.addErrorMessage("Falha ao executar a ação" + e.getMessage());
+			}
+		}else{
+			FacesUtils.addErrorMessage("Falha ao executar a ação");
+			
 		}
 		
 	}

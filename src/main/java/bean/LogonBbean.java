@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import security.SessionContext;
 import util.FacesUtils;
 import dao.UsuarioDAO;
+import dao.impl.UsuarioDAOImpl;
 import entity.Usuario;
 
 @ManagedBean
@@ -24,7 +25,7 @@ public class LogonBbean {
     private String login;
     private String senha;
     
-    private UsuarioDAO usuarioDAO = new UsuarioDAO();
+    private UsuarioDAO usuarioDAO = new UsuarioDAOImpl();
  
     /**
      * Retorna usuario logado

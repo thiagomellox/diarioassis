@@ -17,6 +17,9 @@ import util.Util;
 import dao.AssinanteDAO;
 import dao.EntregadorDAO;
 import dao.UsuarioDAO;
+import dao.impl.AssinanteDAOImpl;
+import dao.impl.EntregadorDAOImpl;
+import dao.impl.UsuarioDAOImpl;
 import dto.AssinanteDTO;
 import entity.Assinante;
 import entity.Entregador;
@@ -47,9 +50,9 @@ public class AssinanteBBean {
 	private Integer codEntregadorPesquisa;
 	private boolean alterando;
 	
-	private AssinanteDAO assinanteDAO = new AssinanteDAO();
-	private EntregadorDAO entregadorDAO = new EntregadorDAO();
-	private UsuarioDAO usu = new UsuarioDAO();
+	private AssinanteDAO assinanteDAO = new AssinanteDAOImpl();
+	private EntregadorDAO entregadorDAO = new EntregadorDAOImpl();
+	private UsuarioDAO usu = new UsuarioDAOImpl();
 	
 
 	public void init() {
@@ -143,6 +146,7 @@ public class AssinanteBBean {
 				valorAnual = DecimalConverter.format(ass.getValoranual()) ;
 				dataCadastro = ass.getDatacadastro();
 				dataValidade = ass.getDatavencimento();
+				mesDataValidade = Util.pegarMeses(dataCadastro, dataValidade);
 				codEntregador = ass.getEntregador().getCodentregador();
 				
 				alterando = true;
@@ -176,10 +180,11 @@ public class AssinanteBBean {
 				dataValidade = ass.getDatavencimento();
 				codEntregador = ass.getEntregador().getCodentregador();
 				
-				RequestContext.getCurrentInstance().addCallbackParam("sucess", true);
+				FacesUtils.sucesso();
+
 			}catch(Exception e){
-				RequestContext.getCurrentInstance().addCallbackParam("sucess", false);
-				FacesUtils.addErrorMessage("Falha ao executar a ação");
+				FacesUtils.erro();
+				FacesUtils.addErrorMessage("Falha ao executar a ação" + e.getMessage());
 			}
 		}else{
 			FacesUtils.addErrorMessage("Falha ao executar a ação");
@@ -187,6 +192,27 @@ public class AssinanteBBean {
 		}
 		
 		return "";
+		
+	}
+	
+	public void excluir() {
+		if(codAssinante != null){
+			try{
+				Assinante ass = assinanteDAO.findById(codAssinante);
+				assinanteDAO.delete(ass);
+
+				FacesUtils.sucesso();
+				FacesUtils.addInfoMessage("Registro excluído com sucesso!");
+				pesquisar();
+				qtdeAssinantes = assinanteDAO.findQtdeRegistros();
+			}catch(Exception e){
+				FacesUtils.erro();
+				FacesUtils.addErrorMessage("Falha ao executar a ação" + e.getMessage());
+			}
+		}else{
+			FacesUtils.addErrorMessage("Falha ao executar a ação");
+			
+		}
 		
 	}
 	

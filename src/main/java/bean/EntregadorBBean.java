@@ -5,12 +5,15 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.persistence.PersistenceException;
 
 import org.primefaces.context.RequestContext;
 
 import util.FacesUtils;
 import dao.AssinanteDAO;
 import dao.EntregadorDAO;
+import dao.impl.AssinanteDAOImpl;
+import dao.impl.EntregadorDAOImpl;
 import dto.EntregadorDTO;
 import entity.Entregador;
 
@@ -31,8 +34,8 @@ public class EntregadorBBean {
 	private String nomePesquisa;
 	private boolean alterando;
 	
-	private AssinanteDAO assinanteDAO = new AssinanteDAO();
-	private EntregadorDAO entregadorDAO = new EntregadorDAO();
+	private AssinanteDAO assinanteDAO = new AssinanteDAOImpl();
+	private EntregadorDAO entregadorDAO = new EntregadorDAOImpl();
 	
 
 	public String salvar() {
@@ -128,6 +131,28 @@ public class EntregadorBBean {
 		}catch(Exception e){
 			RequestContext.getCurrentInstance().addCallbackParam("sucess", false);
 			FacesUtils.erro();
+		}
+	}
+	
+	public void excluir() {
+		if(codentregador != null){
+			try{
+				Entregador ass = entregadorDAO.findById(codentregador);
+				entregadorDAO.remove(ass);
+
+				FacesUtils.sucesso();
+				FacesUtils.addInfoMessage("Registro excluído com sucesso!");
+				pesquisar();
+			}catch(PersistenceException pe){ 	
+				FacesUtils.erro();
+				FacesUtils.addErrorMessage("O registro está sendo utilizado por outro cadastro e não pode ser removido.");
+			} catch(Exception e){ 	
+				FacesUtils.erro();
+				FacesUtils.addErrorMessage("Falha ao executar a ação: " + e.getMessage());
+			}
+		}else{
+			FacesUtils.addErrorMessage("Falha ao executar a ação");
+			
 		}
 		
 	}

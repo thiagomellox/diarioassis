@@ -105,8 +105,8 @@
 							styleClass="ui-priority-primary" icon="ui-icon-close"/>
 							
 					    <p:commandButton value="Excluir" id="excluirModal" ignoreAutoUpdate="true" immediate="true" 
-							style="float: right;" action="#{entregadorBBean.listar}"
-							styleClass="ui-priority-primary" icon="ui-icon-circle-check" />
+							style="float: right;" action="#{entregadorBBean.excluir}" oncomplete="PF('modalE').hide();"
+							styleClass="ui-priority-primary" icon="ui-icon-circle-check" update=":incluirentregador" />
 					</div>
 				</p:dialog>
 			</h:form>
