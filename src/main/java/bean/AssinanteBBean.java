@@ -6,20 +6,20 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
 
 import util.DecimalConverter;
 import util.FacesUtils;
-import util.MD5Utils;
+import util.Util;
 import dao.AssinanteDAO;
 import dao.EntregadorDAO;
 import dao.UsuarioDAO;
 import dto.AssinanteDTO;
 import entity.Assinante;
 import entity.Entregador;
-import entity.Usuario;
 
 @ManagedBean
 @SessionScoped
@@ -38,6 +38,7 @@ public class AssinanteBBean {
 	private Integer codEntregador;
 	
 	private Integer qtdeAssinantes;
+	private Integer mesDataValidade;
 
 	private List<AssinanteDTO> listaGrid;
 	private List<SelectItem> entregadorSelectItem;
@@ -118,6 +119,7 @@ public class AssinanteBBean {
 		dataValidade = null;
 		alterando = false;
 		codEntregador = null;
+		mesDataValidade = null;
 	}
 	
 	public String abrirIncluir() {
@@ -208,11 +210,30 @@ public class AssinanteBBean {
 	
 	public List<SelectItem> getMeses(){
 		List<SelectItem> lista = new ArrayList<SelectItem>();
+		lista.add(new SelectItem(null,"Selecione uma opção"));
 		for(int i = 1; i<=30; i++){
 			lista.add(new SelectItem(i,String.valueOf(i)));
 		}
 		
 		return lista;
+	}
+	
+	public void changeDataCadastro(ValueChangeEvent e){
+		Date data = (Date) e.getNewValue();
+		if(mesDataValidade != null && mesDataValidade.intValue() != 0){
+			dataValidade = Util.somaDate(data, mesDataValidade);
+		}
+	}
+	
+	public void changeDataValidade(ValueChangeEvent e){
+		mesDataValidade = Integer.valueOf(e.getNewValue().toString());
+		if(mesDataValidade != null){
+			if(dataCadastro != null){
+				dataValidade = Util.somaDate(dataCadastro, mesDataValidade);
+			}
+		}else{
+			dataValidade = null;
+		}
 	}
 
 	public Integer getCodAssinante() {
@@ -349,6 +370,14 @@ public class AssinanteBBean {
 
 	public void setQtdeAssinantes(Integer qtdeAssinantes) {
 		this.qtdeAssinantes = qtdeAssinantes;
+	}
+
+	public Integer getMesDataValidade() {
+		return mesDataValidade;
+	}
+
+	public void setMesDataValidade(Integer mesDataValidade) {
+		this.mesDataValidade = mesDataValidade;
 	}
 	
 

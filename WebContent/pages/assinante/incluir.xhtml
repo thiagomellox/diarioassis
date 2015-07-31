@@ -66,19 +66,29 @@
 		            <p:message for="valorMensal" />
 		            	            
 		            <p:outputLabel  for="valorAnual" value="Valor Anual:" />
-		            <p:inputText id="valorAnual" onkeydown="mascara(this,moeda)"  value="#{assinanteBBean.valorAnual}" label="valorAnual">
+		            <p:inputText id="valorAnual" onkeydown="mascara(this,moeda)"  value="#{assinanteBBean.valorAnual}" label="valorAnual" >
 		            </p:inputText> 
 		            <p:message for="valorAnual" />
 		            
 		            <p:outputLabel  for="dataCadastro" value="Data Cadastro:" />
-			       <p:calendar id="dataCadastro" pattern="dd/MM/yyyy" value="#{assinanteBBean.dataCadastro}" required="true"  />
+			       <p:calendar id="dataCadastro" pattern="dd/MM/yyyy" value="#{assinanteBBean.dataCadastro}" 
+			       required="true" valueChangeListener="#{assinanteBBean.changeDataCadastro}">
+			       		<p:ajax process="dataCadastro" partialSubmit="true" event="dateSelect" update="labeldata" /> 
+			       </p:calendar>
 			       <p:message for="dataCadastro" />
 			       
 			       <p:outputLabel  for="dataVencimento" value="Data Vencimento:" />
-<!-- 			       <p:calendar id="dataVencimento" pattern="dd/MM/yyyy" value="#{assinanteBBean.dataValidade}" required="true"  /> -->
-			       <p:selectOneMenu id="dataVencimento" value="#{assinanteBBean.codEntregador}" required="true"  >
-			            <f:selectItems value="#{assinanteBBean.meses}" />
-			        </p:selectOneMenu>
+			       <h:panelGrid columns="2" >
+				       <p:selectOneMenu id="dataVencimento" required="true" 
+				       valueChangeListener="#{assinanteBBean.changeDataValidade}"  >
+				            <f:selectItems value="#{assinanteBBean.meses}" />
+				            <p:ajax event="valueChange" immediate="true" process="@this" update="labeldata"/>
+				        </p:selectOneMenu>
+				        <p:outputLabel id="labeldata" value="#{assinanteBBean.dataValidade}" >
+							<f:convertDateTime pattern="dd/MM/yyyy"/>
+						</p:outputLabel>
+			        </h:panelGrid>
+			        
 			       <p:message for="dataVencimento" />
 			       
 			       <p:outputLabel  for="entregador" value="Entregador:" />
